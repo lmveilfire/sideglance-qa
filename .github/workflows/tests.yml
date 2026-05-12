@@ -1,0 +1,86 @@
+name: CI Tests
+
+on:
+  workflow_dispatch:
+
+jobs:
+  e2e-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Checkout private app code
+        uses: actions/checkout@v4
+        with:
+          repository: lmveilfire/sideglance
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          path: ./app
+
+      - name: Create .env from secrets
+        working-directory: ./app
+        run: |
+          echo "TEST_ADMIN_USERNAME=${{ secrets.TEST_ADMIN_USERNAME }}" >> .env
+          echo "TEST_PASSWORD=${{ secrets.TEST_ADMIN_PASSWORD }}" >> .env
+
+      - name: Start services with CI Compose
+        working-directory: ./app
+        run: docker-compose -f docker-compose.tests.yml up -d --build
+
+      - name: Wait for backend to be ready
+        run: |
+          for i in {1..30}; do
+            if curl -s http://localhost:8080/api/health > /dev/null; then
+              echo "Backend ready"
+              break
+            fi
+            echo "Waiting for backend... ($i/30)"
+            sleep 2
+          done
+      - name: Wait for frontend to be ready
+        run: |
+          for i in {1..30}; do
+            if curl -s http://localhost/health > /dev/null; then
+              echo "Frontend ready"
+              break
+            fi
+            echo "Waiting for frontend... ($i/30)"
+            sleep 2
+          done
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Cache Playwright Browsers
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('typescript-playwright/package-lock.json') }}
+
+      - name: Install Playwright
+        working-directory: typescript-playwright
+        run: |
+          npm ci
+          npm install -D allure-playwright
+          npx playwright install --with-deps chromium
+
+      - name: Run Playwright tests
+        working-directory: typescript-playwright
+        env:
+          BASE_URL: http://localhost
+          ADMIN_USERNAME: ${{ secrets.TEST_ADMIN_USERNAME }}
+          ADMIN_PASSWORD: ${{ secrets.TEST_ADMIN_PASSWORD }}
+        run: npx playwright test
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: typescript-playwright/playwright-report/
+
+      - name: Stop services (cleanup)
+        if: always()
+        working-directory: ./app
+        run: docker-compose -f docker-compose.tests.yml down -v

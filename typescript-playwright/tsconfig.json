@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "target": "ES2022",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "useDefineForClassFields": true,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "noUncheckedSideEffectImports": true,
+    "allowImportingTsExtensions":true,
+    "moduleDetection": "force",
+    "sourceMap": true,
+    "noEmit": true,
+    "outDir":"./dist",
+    "types": ["node", "@playwright/test"],
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "@api/*": ["./src/api/*"],
+      "@pages/*": ["./src/pages/*"],
+      "@helpers/*": ["./src/helpers/*"],
+      "@utils/*": ["./src/utils/*"]
+    }
+  },
+  "include": ["src", "tests"],
+  "exclude": ["node_modules", "allure-report", "allure-results", "dist"]
+}

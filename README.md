@@ -1,0 +1,2 @@
+# sideglance-qa
+E2E и API тесты на TypeScript/Playwright и Python/Selenium/Pytest. Использует Page Object Model, изолированный API-слой и data-driven подход. Allure отчёты, GitHub Actions CI, запуск в headless-режиме.
