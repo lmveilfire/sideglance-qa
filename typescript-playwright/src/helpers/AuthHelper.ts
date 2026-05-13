@@ -1,6 +1,6 @@
 import { type APIRequestContext } from '@playwright/test';
-import { AuthApi } from '../api/AuthApi';
-import { ADMIN_USERNAME, ADMIN_PASSWORD } from '../utils/constants';
+import { AuthApi } from '../api/AuthApi.ts';
+import { ADMIN_USERNAME, ADMIN_PASSWORD } from '../utils/constants.ts';
 
 export class AuthHelper {
   private readonly authApi: AuthApi;

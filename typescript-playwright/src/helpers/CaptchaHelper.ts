@@ -1,5 +1,6 @@
 import type { APIRequestContext } from '@playwright/test';
-import { CommentApi, type CaptchaResponse } from '../api/CommentApi';
+import { CommentApi } from '../api/CommentApi.ts';
+import type {CaptchaResponse, CaptchaData} from '../utils/interfaces.ts';
 
 export class CaptchaHelper {
   private readonly commentApi: CommentApi;
@@ -8,7 +9,7 @@ export class CaptchaHelper {
     this.commentApi = new CommentApi(request);
   }
 
-  async solveCaptcha(): Promise<{ sessionId: string; answer: number }> {
+  async solveCaptcha(): Promise<CaptchaData> {
     const response = await this.commentApi.getCaptcha();
     const captcha: CaptchaResponse = await response.json();
     const answer = this.solve(captcha.question);

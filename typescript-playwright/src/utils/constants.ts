@@ -36,3 +36,6 @@ export const LIMITS = {
 } as const;
 
 export const ALPHABET = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
+export const MIN_ANSWER_TIME_MS = 2000;
+export const DEFAULT_ANSWER_TIME_MS = 3000;
