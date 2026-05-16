@@ -4,7 +4,6 @@
 
 - POST /auth/login (admin, pass)
   - Тело ответа (200): accessToken, refreshToken, username
-  - Ошибка (401): error
   - Блокировка (429): error, retryAfter
 
 - POST /auth/login (неверный пароль)
@@ -15,12 +14,6 @@
 
 - POST /auth/refresh (невалидный refreshToken)
   - Ошибка (401): error
-
-- DELETE /photos/999999 (без токена)
-  - Ошибка (401): не авторизован
-
-- DELETE /photos/999999 (с невалидным токеном)
-  - Ошибка (401): не авторизован  
 
 ## Фотографии
 

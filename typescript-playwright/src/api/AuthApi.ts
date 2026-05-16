@@ -1,5 +1,6 @@
 import type { APIRequestContext , APIResponse } from '@playwright/test';
-
+import { mergeHeaders } from '../utils/headers.ts';
+import { API_URL } from '../utils/constants.ts';
 export interface LoginPayload {
   username: string;
   password: string;
@@ -14,13 +15,28 @@ export interface AuthResponse {
 export class AuthApi {
   constructor(private readonly request: APIRequestContext) {}
 
+  private headers(custom?: Record<string, string>) {
+    return mergeHeaders(custom);
+  }
+
   async login(payload: LoginPayload): Promise<APIResponse> {
-    return this.request.post('/auth/login', { data: payload });
+    const headers = this.headers();
+    console.log(`${API_URL}/auth/login`)
+    return this.request.fetch(`${API_URL}/auth/login`, {
+      method: 'POST',
+      headers: headers,
+      data: payload,
+    });
   }
 
   async refresh(refreshToken: string): Promise<APIResponse> {
-    return this.request.post('/auth/refresh', {
-      data: { refreshToken },
+    return this.request.fetch(`${API_URL}/auth/refresh`, {
+      method: 'POST',
+      data: refreshToken,
+      headers: {
+        ...this.headers(),
+        'Content-Type': 'text/plain',
+      }
     });
   }
 

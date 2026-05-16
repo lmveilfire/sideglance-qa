@@ -1,4 +1,4 @@
-export const API_URL = process.env.API_URL || 'http://localhost:8080/api';
+export const API_URL = process.env.API_URL || 'http://localhost:8080';
 export const BASE_URL = process.env.BASE_URL || 'http://localhost';
 
 function getEnvVar(name: string): string {
@@ -9,8 +9,8 @@ function getEnvVar(name: string): string {
   return value;
 }
 
-export const ADMIN_USERNAME = getEnvVar('ADMIN_USERNAME');
-export const ADMIN_PASSWORD = getEnvVar('ADMIN_PASSWORD');
+export const ADMIN_USERNAME = getEnvVar('TEST_ADMIN_USERNAME');
+export const ADMIN_PASSWORD = getEnvVar('TEST_ADMIN_PASSWORD');
 
 export const TIMEOUTS = {
   SHORT: 3_000,

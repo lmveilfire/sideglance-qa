@@ -78,7 +78,7 @@ export const test = base.extend<Fixtures>({
     await use(new LoginPage(page));
   },
 
-  cleanup: async (_, use) => {
+  cleanup: async ({}, use) => {
     const registry = new CleanupRegistry();
     await use(registry);
     await registry.execute();
@@ -86,3 +86,4 @@ export const test = base.extend<Fixtures>({
 });
 
 export { expect };
+export type { Fixtures };
