@@ -1,6 +1,7 @@
 import type { APIRequestContext, APIResponse } from '@playwright/test';
-
-export type CommentStatus = 'APPROVED' | 'REJECTED' | 'PENDING';
+import type {CommentStatus} from '../utils/types.ts';
+import { API_URL } from '../utils/constants.ts';
+import { mergeHeaders } from '../utils/headers.ts';
 
 export class AdminCommentApi {
   constructor(
@@ -8,40 +9,37 @@ export class AdminCommentApi {
     private readonly authHeaders: Record<string, string>
   ) {}
 
-  async getAll(page = 0, size = 20): Promise<APIResponse> {
-    return this.request.get('/admin/comments', {
-      params: { page, size },
-      headers: this.authHeaders,
-    });
+  private get headers(): Record<string, string> {
+    return mergeHeaders(this.authHeaders);
   }
 
-  async getPending(page = 0, size = 20): Promise<APIResponse> {
-    return this.request.get('/admin/comments/pending', {
+  async getComments(page = 0, size = 20): Promise<APIResponse> {
+    return this.request.get(`${API_URL}/api/admin/comments`, {
       params: { page, size },
-      headers: this.authHeaders,
+      headers: this.headers,
     });
   }
-
+ 
   async getStats(): Promise<APIResponse> {
-    return this.request.get('/admin/comments/stats', {
-      headers: this.authHeaders,
+    return this.request.get(`${API_URL}/api/admin/comments/stats`, {
+      headers: this.headers,
     });
   }
-
+ 
   async moderate(
     commentId: number,
     status: CommentStatus,
-    rejectionReason = ''
+    rejectionReason?: string
   ): Promise<APIResponse> {
-    return this.request.put(`/admin/comments/${commentId}/moderate`, {
-      data: { status, rejectionReason },
-      headers: this.authHeaders,
+    return this.request.put(`${API_URL}/api/admin/comments/${commentId}/moderate`, {
+      data: { status, ...(rejectionReason ? { rejectionReason } : {}) },
+      headers: this.headers,
     });
   }
-
+ 
   async deleteComment(commentId: number): Promise<APIResponse> {
-    return this.request.delete(`/admin/comments/${commentId}`, {
-      headers: this.authHeaders,
+    return this.request.delete(`${API_URL}/api/admin/comments/${commentId}`, {
+      headers: this.headers,
     });
   }
 }

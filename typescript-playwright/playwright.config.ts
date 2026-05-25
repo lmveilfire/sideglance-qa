@@ -8,7 +8,7 @@ export default defineConfig({
   testDir: './tests',
   timeout: 30000,
   retries: process.env.CI ? 2 :0,
-  workers: 1,
+  workers: 4,
   outputDir: './test-results',
   grepInvert: /@security/,
   reporter: [
@@ -19,7 +19,7 @@ export default defineConfig({
   ],
   
   use: {
-    baseURL: process.env.BASE_URL || 'http://localhost/8080/api',
+    baseURL: process.env.BASE_URL || 'http://localhost:8080/api',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
     trace: 'retain-on-failure',

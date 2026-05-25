@@ -1,6 +1,8 @@
-import type { APIRequestContext } from '@playwright/test';
+import type { APIRequestContext} from '@playwright/test';
 import { CommentApi } from '../api/CommentApi.ts';
-import type {CaptchaResponse, CaptchaData} from '../utils/interfaces.ts';
+import type {CaptchaResponse, CaptchaData} from '../utils/types.ts';
+import { DEFAULT_ANSWER_TIME_MS } from '../utils/constants.ts';
+
 
 export class CaptchaHelper {
   private readonly commentApi: CommentApi;
@@ -9,11 +11,11 @@ export class CaptchaHelper {
     this.commentApi = new CommentApi(request);
   }
 
-  async solveCaptcha(): Promise<CaptchaData> {
+  async solveCaptcha(answerTimeMs = DEFAULT_ANSWER_TIME_MS): Promise<CaptchaData> {
     const response = await this.commentApi.getCaptcha();
     const captcha: CaptchaResponse = await response.json();
     const answer = this.solve(captcha.question);
-    return { sessionId: captcha.sessionId, answer };
+    return { sessionId: captcha.sessionId, answer, answerTimeMs };
   }
 
   private solve(question: string): number {

@@ -1,7 +1,9 @@
 import type { APIRequestContext, APIResponse } from '@playwright/test';
 import * as fs from 'fs/promises';
 import * as path from 'path';
-import type { PhotoPayload } from '../utils/generators.ts';
+import type { PhotoPayload } from '../utils/types.ts';
+import { API_URL } from '../utils/constants.ts';
+import { mergeHeaders } from '../utils/headers.ts';
 
 export class PhotoApi {
   constructor(
@@ -9,16 +11,20 @@ export class PhotoApi {
     private readonly authHeaders: Record<string, string>
   ) {}
 
+  private get headers(): Record<string, string> {
+    return mergeHeaders(this.authHeaders);
+  }
+
   async getAll(): Promise<APIResponse> {
-    return this.request.get('/photos');
+    return this.request.get(`${API_URL}/api/photos`);
   }
 
   async getById(photoId: number): Promise<APIResponse> {
-    return this.request.get(`/photos/${photoId}`);
+    return this.request.get(`${API_URL}/api/photos/${photoId}`);
   }
 
   async getByCategory(categoryId: number): Promise<APIResponse> {
-    return this.request.get(`/photos/category/${categoryId}`);
+    return this.request.get(`${API_URL}/api/photos/category/${categoryId}`);
   }
 
   async upload(
@@ -31,27 +37,29 @@ export class PhotoApi {
       title: payload.title,
       author: payload.author,
     };
-    if (payload.place) formData.place = payload.place;
-    if (payload.takenAt) formData.takenAt = payload.takenAt;
+    if (payload.place)                    formData.place = payload.place;
+    if (payload.takenAt)                  formData.takenAt = payload.takenAt;
     if (payload.categoryId !== undefined) formData.categoryId = String(payload.categoryId);
     if (payload.subcategoryId !== undefined) formData.subcategoryId = String(payload.subcategoryId);
-
-    return this.request.post('/photos', {
+ 
+    return this.request.post(`${API_URL}/api/photos`, {
       multipart: formData,
       headers: this.authHeaders,
     });
   }
 
   async like(photoId: number): Promise<APIResponse> {
-    return this.request.put(`/photos/${photoId}/like`);
+    return this.request.put(`${API_URL}/api/photos/${photoId}/like`, {
+    headers: this.headers,
+    });
   }
 
   async recordView(photoId: number): Promise<APIResponse> {
-    return this.request.put(`/photos/${photoId}/view`);
+    return this.request.put(`${API_URL}/api/photos/${photoId}/view`);
   }
 
   async deletePhoto(photoId: number): Promise<APIResponse> {
-    return this.request.delete(`/photos/${photoId}`, {
+    return this.request.delete(`${API_URL}/api/photos/${photoId}`, {
       headers: this.authHeaders,
     });
   }

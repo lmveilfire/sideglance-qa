@@ -11,6 +11,12 @@ import { GalleryPage } from '../pages/GalleryPage';
 import { PhotoPage } from '../pages/PhotoPage.ts';
 import { LoginPage } from '../pages/LoginPage.ts';
 import { CleanupRegistry } from './CleanupRegistry.ts';
+import { CategoryClient } from '../clients/CategoryClient.ts';
+import { SubcategoryClient } from '../clients/SubcategoryClient.ts';
+import { AuthClient } from '../clients/AuthClient.ts';
+import { PhotoClient } from '../clients/PhotoClient.ts';
+import { CommentClient } from '../clients/CommentClient.ts';
+import { AdminCommentClient } from '../clients/AdminCommentClient.ts';
 
 type Fixtures = {
   authHelper: AuthHelper;
@@ -26,6 +32,12 @@ type Fixtures = {
   photoPage: PhotoPage;
   loginPage: LoginPage;
   cleanup: CleanupRegistry;
+  categoryClient: CategoryClient;
+  subcategoryClient: SubcategoryClient;
+  authClient: AuthClient;
+  photoClient: PhotoClient,
+  commentClient: CommentClient,
+  adminCommentClient: AdminCommentClient
 };
 
 export const test = base.extend<Fixtures>({
@@ -50,12 +62,12 @@ export const test = base.extend<Fixtures>({
     await use(new CategoryApi(request, authHeaders));
   },
 
-  subcategoryApi: async ({ request, authHeaders }, use) => {
-    await use(new SubcategoryApi(request, authHeaders));
-  },
-
   commentApi: async ({ request }, use) => {
     await use(new CommentApi(request));
+  },
+
+  subcategoryApi: async ({ request, authHeaders }, use) => {
+    await use(new SubcategoryApi(request, authHeaders));
   },
 
   adminCommentApi: async ({ request, authHeaders }, use) => {
@@ -82,6 +94,30 @@ export const test = base.extend<Fixtures>({
     const registry = new CleanupRegistry();
     await use(registry);
     await registry.execute();
+  },
+
+  categoryClient: async ({ categoryApi }, use) => {
+    await use(new CategoryClient(categoryApi));
+  },
+ 
+  subcategoryClient: async ({ subcategoryApi }, use) => {
+    await use(new SubcategoryClient(subcategoryApi));
+  },
+
+  authClient: async ({ authApi }, use) => {
+    await use(new AuthClient(authApi));
+  },
+
+  photoClient: async ({ photoApi }, use) => {
+    await use(new PhotoClient(photoApi));
+  },
+
+  adminCommentClient: async ({ adminCommentApi }, use) => {
+    await use(new AdminCommentClient(adminCommentApi));
+  },
+  
+  commentClient: async ({ commentApi }, use) => {
+    await use(new CommentClient(commentApi));
   },
 });
 
