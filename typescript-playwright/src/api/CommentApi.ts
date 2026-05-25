@@ -1,13 +1,14 @@
 import type { APIRequestContext, APIResponse } from '@playwright/test';
-import type { CommentPayload } from '../utils/generators';
-import { MIN_ANSWER_TIME_MS, DEFAULT_ANSWER_TIME_MS } from '../utils/constants.ts';
-import type { CaptchaData } from '../utils/interfaces.ts';
+import { DEFAULT_ANSWER_TIME_MS } from '../utils/constants.ts';
+import type { CaptchaData, CommentPayload } from '../utils/types.ts';
+import { API_URL } from '../utils/constants.ts'
+import { mergeHeaders } from '../utils/headers.ts';
 
 export class CommentApi {
   constructor(private readonly request: APIRequestContext) {}
 
   async getCaptcha(): Promise<APIResponse> {
-    return this.request.get('/comments/captcha');
+    return this.request.get(`${API_URL}/api/comments/captcha`);
   }
 
   async getComments(
@@ -15,29 +16,26 @@ export class CommentApi {
     page = 0,
     size = 5
   ): Promise<APIResponse> {
-    return this.request.get('/comments', {
+    return this.request.get(`${API_URL}/api/comments`, {
       params: { photoId, page, size },
     });
   }
 
   async create(
     payload: CommentPayload,
-    captcha: CaptchaData
+    captcha: CaptchaData,
+    customHeaders?: Record<string, string>
   ): Promise<APIResponse> {
     const answerTimeMs = captcha.answerTimeMs ?? DEFAULT_ANSWER_TIME_MS;
-
-    if (answerTimeMs < MIN_ANSWER_TIME_MS) {
-      throw new Error(
-        `[CommentApi] answerTimeMs must be >= ${MIN_ANSWER_TIME_MS}, got ${answerTimeMs}`
-      );
-    }
-
-    return this.request.post('/comments', {
+ 
+    return this.request.post(`${API_URL}/api/comments`, {
       data: payload,
       headers: {
+        ...mergeHeaders(),
         'X-Captcha-Session-Id': captcha.sessionId,
         'X-Captcha-Answer': String(captcha.answer),
         'X-Answer-Time-Ms': String(answerTimeMs),
+        ...customHeaders,
       },
     });
   }
