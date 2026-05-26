@@ -1,6 +1,4 @@
 # sideglance-qa
-E2E и API тесты на TypeScript/Playwright и Python/Selenium/Pytest. Использует Page Object Model, изолированный API-слой и data-driven подход. Allure отчёты, GitHub Actions CI, запуск в headless-режиме.
-
 > E2E и API-тесты для галереи [sideglance.ru](https://sideglance.ru)  
 > TypeScript/Playwright + Python/Selenium | CI/CD в GitHub Actions | Allure отчёты
 
@@ -9,7 +7,6 @@ E2E и API тесты на TypeScript/Playwright и Python/Selenium/Pytest. Ис
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## 1. Архитектура
-
 ```
 typescript-playwright/           
 ├── src
@@ -33,9 +30,15 @@ typescript-playwright/
 
 ```mermaid
 flowchart TD
-    A[Test Layer\ntest('TC-CAT-01', async ({ categoryClient }) => {})] -->|использует| B[Client Layer\nCategoryClient.create(name)\n→ Promise<CategoryDto>\nбросает исключение при !ok()]
-    B -->|делегирует| C[API Layer\nCategoryApi.create(name)\n→ Promise<APIResponse>\nчистый HTTP, без assert]
-    C -->|использует| D[Playwright\nAPIRequestContext]
+    A["Test Layer
+    test TC-CAT-01"] -->|использует| B["Client Layer
+    CategoryClient.create
+    Promise<CategoryDto>"]
+    B -->|делегирует| C["API Layer
+    CategoryApi.create
+    Promise<APIResponse>"]
+    C -->|использует| D["⚙Playwright
+    APIRequestContext"]
     
     style A fill:#e1f5fe,stroke:#01579b
     style B fill:#e8f5e9,stroke:#2e7d32
