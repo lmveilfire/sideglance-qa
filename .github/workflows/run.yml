@@ -21,12 +21,15 @@ jobs:
         run: |
           echo "TEST_ADMIN_USERNAME=${{ secrets.TEST_ADMIN_USERNAME }}" >> .env
           echo "TEST_ADMIN_PASSWORD=${{ secrets.TEST_ADMIN_PASSWORD }}" >> .env
+          echo "TEST_DB_USERNAME=${{ secrets.TEST_DB_USERNAME }}" >> .env
+          echo "TEST_DB_PASSWORD=${{ secrets.TEST_DB_PASSWORD }}" >> .env
+
       - name: Build frontend for Docker context
         working-directory: ./app/frontend
         run: |
           npm ci
           npm run build
-          
+
       - name: Start services with CI Compose
         working-directory: ./app
         run: docker compose -f docker-compose.tests.yml up -d --build
