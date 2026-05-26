@@ -37,7 +37,7 @@ flowchart TD
     B -->|делегирует| C["API Layer
     CategoryApi.create
     Promise<APIResponse>"]
-    C -->|использует| D["⚙Playwright
+    C -->|использует| D["Playwright
     APIRequestContext"]
     
     style A fill:#e1f5fe,stroke:#01579b
