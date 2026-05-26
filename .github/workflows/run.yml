@@ -92,8 +92,8 @@ jobs:
         env:
           API_URL: http://localhost:8080
           BASE_URL: http://localhost
-          ADMIN_USERNAME: ${{ secrets.TEST_ADMIN_USERNAME }}
-          ADMIN_PASSWORD: ${{ secrets.TEST_ADMIN_PASSWORD }}
+          TEST_ADMIN_USERNAME: ${{ secrets.TEST_ADMIN_USERNAME }}
+          TEST_ADMIN_PASSWORD: ${{ secrets.TEST_ADMIN_PASSWORD }}
         run: npx playwright test
 
       - name: Upload Playwright report
