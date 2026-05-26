@@ -73,9 +73,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '24'
-          
+
+      - name: Cache node modules
+        uses: actions/cache@v4
+        with:
+          path: typescript-playwright/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('typescript-playwright/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Cache Playwright Browsers
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-${{ hashFiles('typescript-playwright/package-lock.json') }}
@@ -103,6 +111,15 @@ jobs:
           name: playwright-report
           path: typescript-playwright/playwright-report/
           retention-days: 7
+          
+      - name: Upload Allure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: typescript-playwright/allure-results/
+          retention-days: 7
+          include-hidden-files: true 
 
       - name: Stop services (cleanup)
         if: always()
