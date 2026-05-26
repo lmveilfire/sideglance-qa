@@ -39,26 +39,35 @@ jobs:
           for i in {1..30}; do
             if curl -s http://localhost:8080/api/health > /dev/null; then
               echo "Backend ready"
+              BACKEND_READY=true
               break
             fi
             echo "Waiting for backend... ($i/30)"
             sleep 3
           done
           echo "Backend did not start in time"
-          exit 1
+
+          if [ "$BACKEND_READY" = false ]; then
+            echo "Backend did not start in time"
+            exit 1
+          fi
 
       - name: Wait for frontend to be ready
         run: |
           for i in {1..30}; do
             if curl -s http://localhost/health > /dev/null; then
               echo "Frontend ready"
+              FRONTEND_READY=true
               break
             fi
             echo "Waiting for frontend... ($i/30)"
             sleep 3
           done
-          echo "Frontend did not start in time"
-          exit 1
+
+           if [ "$FRONTEND_READY" = false ]; then
+            echo "Frontend did not start in time"
+            exit 1
+          fi
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
