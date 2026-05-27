@@ -28,8 +28,4 @@ export class LoginPage extends BasePage {
     await this.submitButton.click();
     await this.waitForLoad();
   }
-
-  async getErrorText(): Promise<string> {
-    return (await this.errorMessage.textContent()) || '';
-  }
 }

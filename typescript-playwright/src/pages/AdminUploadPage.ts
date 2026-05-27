@@ -49,7 +49,7 @@ export class AdminUploadPage extends BasePage {
   
   @step('Открыть админ панель')
   async goto(): Promise<void> {
-    await this.page.goto('/admin-panel');
+    await this.page.goto('/admin-panel/upload');
     await this.waitForLoad();
   }
 
