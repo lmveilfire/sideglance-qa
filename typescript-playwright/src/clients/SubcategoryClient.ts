@@ -1,9 +1,8 @@
-import type { SubcategoryApi } from '../api/SubcategoryApi.ts';
-import type { SubcategoryDto } from '../utils/types.ts';
-import { statusIn } from '../utils/statusIn.ts';
-import { HTTP } from '../utils/constants.ts';
-import { step } from '../utils/decorators.ts';
-
+import type { SubcategoryApi } from "../api/SubcategoryApi.ts";
+import type { SubcategoryDto } from "../utils/types.ts";
+import { statusIn } from "../utils/statusIn.ts";
+import { HTTP } from "../utils/constants.ts";
+import { step } from "../utils/decorators.ts";
 export class SubcategoryClient {
   constructor(private readonly api: SubcategoryApi) {}
 
@@ -12,7 +11,7 @@ export class SubcategoryClient {
     const response = await this.api.create(categoryId, name);
     if (!statusIn(HTTP.OK, HTTP.CREATED)(response.status())) {
       throw new Error(
-        `[SubcategoryClient] create failed: ${response.status()} ${await response.text()}`
+        `[SubcategoryClient] create failed: ${response.status()} ${await response.text()}`,
       );
     }
     return response.json() as Promise<SubcategoryDto>;
@@ -28,7 +27,7 @@ export class SubcategoryClient {
     const response = await this.api.getByCategoryId(categoryId);
     if (!statusIn(HTTP.OK)(response.status())) {
       throw new Error(
-        `[SubcategoryClient] getByCategoryId failed: ${response.status()} ${await response.text()}`
+        `[SubcategoryClient] getByCategoryId failed: ${response.status()} ${await response.text()}`,
       );
     }
     return response.json() as Promise<SubcategoryDto[]>;

@@ -1,22 +1,22 @@
-import { test as base, expect } from '@playwright/test';
-import { AuthHelper } from '../helpers/AuthHelper.ts';
-import { AuthApi } from '../api/AuthApi.ts';
-import { PhotoApi } from '../api/PhotoApi.ts';
-import { CategoryApi } from '../api/CategoryApi.ts';
-import { SubcategoryApi } from '../api/SubcategoryApi.ts';
-import { CommentApi } from '../api/CommentApi.ts';
-import { AdminCommentApi } from '../api/AdminCommentApi.ts';
-import { CaptchaHelper } from '../helpers/CaptchaHelper.ts';
-import { GalleryPage } from '../pages/GalleryPage';
-import { PhotoPage } from '../pages/PhotoPage.ts';
-import { LoginPage } from '../pages/LoginPage.ts';
-import { CleanupRegistry } from './CleanupRegistry.ts';
-import { CategoryClient } from '../clients/CategoryClient.ts';
-import { SubcategoryClient } from '../clients/SubcategoryClient.ts';
-import { AuthClient } from '../clients/AuthClient.ts';
-import { PhotoClient } from '../clients/PhotoClient.ts';
-import { CommentClient } from '../clients/CommentClient.ts';
-import { AdminCommentClient } from '../clients/AdminCommentClient.ts';
+import { test as base, expect } from "@playwright/test";
+import { AuthHelper } from "../helpers/AuthHelper.ts";
+import { AuthApi } from "../api/AuthApi.ts";
+import { PhotoApi } from "../api/PhotoApi.ts";
+import { CategoryApi } from "../api/CategoryApi.ts";
+import { SubcategoryApi } from "../api/SubcategoryApi.ts";
+import { CommentApi } from "../api/CommentApi.ts";
+import { AdminCommentApi } from "../api/AdminCommentApi.ts";
+import { CaptchaHelper } from "../helpers/CaptchaHelper.ts";
+import { GalleryPage } from "../pages/GalleryPage";
+import { PhotoPage } from "../pages/PhotoPage.ts";
+import { LoginPage } from "../pages/LoginPage.ts";
+import { CategoryClient } from "../clients/CategoryClient.ts";
+import { SubcategoryClient } from "../clients/SubcategoryClient.ts";
+import { AuthClient } from "../clients/AuthClient.ts";
+import { PhotoClient } from "../clients/PhotoClient.ts";
+import { CommentClient } from "../clients/CommentClient.ts";
+import { AdminCommentClient } from "../clients/AdminCommentClient.ts";
+import { UiAuthHelper } from "../helpers/UiAuthHelper.ts";
 
 type Fixtures = {
   authHelper: AuthHelper;
@@ -31,13 +31,13 @@ type Fixtures = {
   galleryPage: GalleryPage;
   photoPage: PhotoPage;
   loginPage: LoginPage;
-  cleanup: CleanupRegistry;
   categoryClient: CategoryClient;
   subcategoryClient: SubcategoryClient;
   authClient: AuthClient;
-  photoClient: PhotoClient,
-  commentClient: CommentClient,
-  adminCommentClient: AdminCommentClient
+  photoClient: PhotoClient;
+  commentClient: CommentClient;
+  adminCommentClient: AdminCommentClient;
+  uiAuthHelper: UiAuthHelper;
 };
 
 export const test = base.extend<Fixtures>({
@@ -90,16 +90,10 @@ export const test = base.extend<Fixtures>({
     await use(new LoginPage(page));
   },
 
-  cleanup: async ({}, use) => {
-    const registry = new CleanupRegistry();
-    await use(registry);
-    await registry.execute();
-  },
-
   categoryClient: async ({ categoryApi }, use) => {
     await use(new CategoryClient(categoryApi));
   },
- 
+
   subcategoryClient: async ({ subcategoryApi }, use) => {
     await use(new SubcategoryClient(subcategoryApi));
   },
@@ -115,9 +109,13 @@ export const test = base.extend<Fixtures>({
   adminCommentClient: async ({ adminCommentApi }, use) => {
     await use(new AdminCommentClient(adminCommentApi));
   },
-  
+
   commentClient: async ({ commentApi }, use) => {
     await use(new CommentClient(commentApi));
+  },
+
+  uiAuthHelper: async ({ page, authHelper }, use) => {
+    await use(new UiAuthHelper(page, authHelper));
   },
 });
 

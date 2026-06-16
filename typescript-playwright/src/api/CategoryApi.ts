@@ -1,10 +1,10 @@
-import type { APIRequestContext, APIResponse } from '@playwright/test';
-import { API_URL } from '../utils/constants.ts';
+import type { APIRequestContext, APIResponse } from "@playwright/test";
+import { API_URL } from "../utils/constants.ts";
 
 export class CategoryApi {
   constructor(
     private readonly request: APIRequestContext,
-    private readonly authHeaders: Record<string, string> = {}
+    private readonly authHeaders: Record<string, string> = {},
   ) {}
 
   async getAll(): Promise<APIResponse> {
@@ -20,7 +20,7 @@ export class CategoryApi {
 
   async deleteCategory(
     categoryId: number,
-    headers?: Record<string, string>
+    headers?: Record<string, string>,
   ): Promise<APIResponse> {
     return this.request.delete(`${API_URL}/api/categories/${categoryId}`, {
       headers: headers ?? this.authHeaders,

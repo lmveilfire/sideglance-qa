@@ -1,8 +1,8 @@
-import type { AuthApi } from '../api/AuthApi.ts';
-import type { AuthResponse, LoginPayload } from '../utils/types.ts';
-import { statusIn } from '../utils/statusIn.ts';
-import { HTTP } from '../utils/constants.ts';
-import { step } from '../utils/decorators.ts';
+import type { AuthApi } from "../api/AuthApi.ts";
+import type { AuthResponse, LoginPayload } from "../utils/types.ts";
+import { statusIn } from "../utils/statusIn.ts";
+import { HTTP } from "../utils/constants.ts";
+import { step } from "../utils/decorators.ts";
 
 export class AuthClient {
   constructor(private readonly api: AuthApi) {}
@@ -12,7 +12,7 @@ export class AuthClient {
     const response = await this.api.login(payload);
     if (!statusIn(HTTP.OK, HTTP.CREATED)(response.status())) {
       throw new Error(
-        `[AuthClient] login failed: ${response.status()} ${await response.text()}`
+        `[AuthClient] login failed: ${response.status()} ${await response.text()}`,
       );
     }
     return response.json() as Promise<AuthResponse>;
@@ -23,7 +23,7 @@ export class AuthClient {
     const response = await this.api.refresh(refreshToken);
     if (!statusIn(HTTP.OK, HTTP.CREATED)(response.status())) {
       throw new Error(
-        `[AuthClient] refresh failed: ${response.status()} ${await response.text()}`
+        `[AuthClient] refresh failed: ${response.status()} ${await response.text()}`,
       );
     }
     return response.json() as Promise<AuthResponse>;
