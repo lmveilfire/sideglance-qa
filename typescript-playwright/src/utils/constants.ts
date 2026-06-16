@@ -1,5 +1,5 @@
-export const API_URL = process.env.API_URL || 'http://localhost:8080';
-export const BASE_URL = process.env.BASE_URL || 'http://localhost';
+export const API_URL = process.env.API_URL || "http://localhost:8080";
+export const BASE_URL = process.env.BASE_URL || "http://localhost";
 
 function getEnvVar(name: string): string {
   const value = process.env[name];
@@ -9,14 +9,8 @@ function getEnvVar(name: string): string {
   return value;
 }
 
-export const ADMIN_USERNAME = getEnvVar('TEST_ADMIN_USERNAME');
-export const ADMIN_PASSWORD = getEnvVar('TEST_ADMIN_PASSWORD');
-
-export const TIMEOUTS = {
-  SHORT: 3_000,
-  MEDIUM: 10_000,
-  LONG: 30_000,
-} as const;
+export const ADMIN_USERNAME = getEnvVar("TEST_ADMIN_USERNAME");
+export const ADMIN_PASSWORD = getEnvVar("TEST_ADMIN_PASSWORD");
 
 export const HTTP = {
   OK: 200,
@@ -31,11 +25,10 @@ export const HTTP = {
 } as const;
 
 export const LIMITS = {
-  photo:   { titleMax: 255, authorMax: 255 },
+  photo: { titleMax: 255, authorMax: 255 },
   comment: { authorMax: 100, textMax: 1000 },
 } as const;
 
-export const ALPHABET = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-
-export const MIN_ANSWER_TIME_MS = 2000;
+export const IVALID_TOKEN =
+  "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiZXhwIjo5OTk5OTk5OTk5fQ.invalid-signature";
 export const DEFAULT_ANSWER_TIME_MS = 3000;

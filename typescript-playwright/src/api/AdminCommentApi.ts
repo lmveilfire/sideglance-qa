@@ -1,12 +1,12 @@
-import type { APIRequestContext, APIResponse } from '@playwright/test';
-import type {CommentStatus} from '../utils/types.ts';
-import { API_URL } from '../utils/constants.ts';
-import { mergeHeaders } from '../utils/headers.ts';
+import type { APIRequestContext, APIResponse } from "@playwright/test";
+import type { CommentStatus } from "../utils/types.ts";
+import { API_URL } from "../utils/constants.ts";
+import { mergeHeaders } from "../utils/headers.ts";
 
 export class AdminCommentApi {
   constructor(
     private readonly request: APIRequestContext,
-    private readonly authHeaders: Record<string, string>
+    private readonly authHeaders: Record<string, string>,
   ) {}
 
   private get headers(): Record<string, string> {
@@ -19,24 +19,27 @@ export class AdminCommentApi {
       headers: this.headers,
     });
   }
- 
+
   async getStats(): Promise<APIResponse> {
     return this.request.get(`${API_URL}/api/admin/comments/stats`, {
       headers: this.headers,
     });
   }
- 
+
   async moderate(
     commentId: number,
     status: CommentStatus,
-    rejectionReason?: string
+    rejectionReason?: string,
   ): Promise<APIResponse> {
-    return this.request.put(`${API_URL}/api/admin/comments/${commentId}/moderate`, {
-      data: { status, ...(rejectionReason ? { rejectionReason } : {}) },
-      headers: this.headers,
-    });
+    return this.request.put(
+      `${API_URL}/api/admin/comments/${commentId}/moderate`,
+      {
+        data: { status, ...(rejectionReason ? { rejectionReason } : {}) },
+        headers: this.headers,
+      },
+    );
   }
- 
+
   async deleteComment(commentId: number): Promise<APIResponse> {
     return this.request.delete(`${API_URL}/api/admin/comments/${commentId}`, {
       headers: this.headers,

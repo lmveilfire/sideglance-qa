@@ -1,4 +1,4 @@
-export type CommentStatus = 'APPROVED' | 'REJECTED' | 'PENDING';
+export type CommentStatus = "APPROVED" | "REJECTED" | "PENDING";
 
 export interface CaptchaResponse {
   sessionId: string;
@@ -90,21 +90,21 @@ export interface CommentStatsDto {
 }
 
 export interface PhotoPayload {
-    title: string;
-    author: string;
-    place?: string;
-    takenAt?: string;
-    categoryId?: number;
-    subcategoryId?: number;
+  title: string;
+  author: string;
+  place: string;
+  takenAt?: string | undefined;
+  categoryId?: number | undefined;
+  subcategoryId?: number | undefined;
 }
 
 export interface CommentPayload {
-    author: string;
-    text: string;
-    photoId: number;
-    honeypot?: string;
+  author: string;
+  text: string;
+  photoId: number;
+  honeypot?: string;
 }
 
 export interface CategoryPayload {
-    name: string;
+  name: string;
 }

@@ -11,6 +11,8 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "format": "prettier --write \"**/*.ts\"",
+    "format:check": "prettier --check .",
     "report": "allure generate allure-results --clean -o allure-report && allure open allure-report"
   },
   "author": "Lyusi Mur",
@@ -23,10 +25,12 @@
     "allure-playwright": "^3.7.1",
     "dotenv": "^17.4.2",
     "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-playwright": "^2.10.2",
     "globals": "^17.6.0",
     "jiti": "^2.7.0",
+    "prettier": "^3.8.4",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.59.3"
+    "typescript-eslint": "^8.61.0"
   }
 }

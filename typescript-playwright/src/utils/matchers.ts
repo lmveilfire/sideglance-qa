@@ -1,18 +1,8 @@
-import { expect } from '../fixtures/fixtures.ts';
+import { expect } from "../fixtures/fixtures.ts";
 
 export const PhotoMatcher = {
   base: expect.objectContaining({
     id: expect.any(Number),
-    title: expect.any(String),
-    author: expect.any(String),
-    url: expect.any(String),
-    fullUrl: expect.any(String),
-    likes: expect.any(Number),
-    views: expect.any(Number),
-  }),
-
-  withId: (id: number) => expect.objectContaining({
-    id,
     title: expect.any(String),
     author: expect.any(String),
     url: expect.any(String),

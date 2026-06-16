@@ -1,6 +1,6 @@
-import { type APIRequestContext } from '@playwright/test';
-import { AuthApi } from '../api/AuthApi.ts';
-import { ADMIN_USERNAME, ADMIN_PASSWORD } from '../utils/constants.ts';
+import { type APIRequestContext } from "@playwright/test";
+import { AuthApi } from "../api/AuthApi.ts";
+import { ADMIN_USERNAME, ADMIN_PASSWORD } from "../utils/constants.ts";
 
 export class AuthHelper {
   private readonly authApi: AuthApi;
@@ -17,7 +17,10 @@ export class AuthHelper {
     return this.authApi.getAuthHeaders(ADMIN_USERNAME, ADMIN_PASSWORD);
   }
 
-  async loginWithInvalidPassword(times: number, password = 'wrong_password'): Promise<void> {
+  async loginWithInvalidPassword(
+    times: number,
+    password = "wrong_password",
+  ): Promise<void> {
     for (let i = 0; i < times; i++) {
       await this.authApi.login({
         username: ADMIN_USERNAME,
