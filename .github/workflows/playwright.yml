@@ -28,7 +28,7 @@ jobs:
         working-directory: ./app/frontend
         run: |
           npm ci
-          npm run build
+          npm run build:test
 
       - name: Start services with CI Compose
         working-directory: ./app
@@ -87,6 +87,8 @@ jobs:
         with:
           path: ~/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-${{ hashFiles('typescript-playwright/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-playwright-
 
       - name: Install Playwright
         working-directory: typescript-playwright
