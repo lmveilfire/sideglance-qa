@@ -1,7 +1,12 @@
 import type { Page, Locator } from "@playwright/test";
 
 export abstract class BasePage {
-  constructor(protected readonly page: Page) {}
+  protected readonly page: Page;
+
+  constructor(page: Page) {
+    this.page = page;
+  }
+  
   get footer(): Locator {
     return this.page.locator("footer");
   }

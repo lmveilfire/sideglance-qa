@@ -5,7 +5,11 @@ import { API_URL } from "../utils/constants.ts";
 import { mergeHeaders } from "../utils/headers.ts";
 
 export class CommentApi {
-  constructor(private readonly request: APIRequestContext) {}
+  private readonly request: APIRequestContext
+  
+  constructor(request: APIRequestContext) {
+    this.request = request;
+  }
 
   async getCaptcha(): Promise<APIResponse> {
     return this.request.get(`${API_URL}/api/comments/captcha`);

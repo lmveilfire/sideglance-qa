@@ -10,7 +10,11 @@ import { HTTP } from "../utils/constants.ts";
 import { step } from "../utils/decorators.ts";
 
 export class AdminCommentClient {
-  constructor(private readonly api: AdminCommentApi) {}
+  private readonly api: AdminCommentApi;
+  
+  constructor( api: AdminCommentApi) {
+    this.api = api;
+  }
 
   @step()
   async listAll(page = 0, size = 20): Promise<AdminCommentsPageResponse> {

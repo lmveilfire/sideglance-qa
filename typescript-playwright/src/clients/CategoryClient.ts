@@ -4,7 +4,11 @@ import { statusIn } from "../utils/statusIn.ts";
 import { HTTP } from "../utils/constants.ts";
 import { step } from "../utils/decorators.ts";
 export class CategoryClient {
-  constructor(private readonly api: CategoryApi) {}
+  private readonly api: CategoryApi;
+
+  constructor(api: CategoryApi) {
+    this.api = api;
+  }
 
   @step()
   async create(name: string): Promise<CategoryDto> {

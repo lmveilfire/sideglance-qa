@@ -5,7 +5,11 @@ import { HTTP } from "../utils/constants.ts";
 import { step } from "../utils/decorators.ts";
 
 export class AuthClient {
-  constructor(private readonly api: AuthApi) {}
+  private readonly api: AuthApi;
+ 
+  constructor(api: AuthApi) {
+    this.api = api;
+  }
 
   @step()
   async login(payload: LoginPayload): Promise<AuthResponse> {

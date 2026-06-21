@@ -12,7 +12,11 @@ import { step } from "../utils/decorators.ts";
 import { generate } from "../utils/generators.ts";
 
 export class CommentClient {
-  constructor(private readonly api: CommentApi) {}
+  private readonly api: CommentApi;
+
+  constructor(api: CommentApi) {
+    this.api = api;
+  }
 
   @step()
   async getCaptcha(): Promise<CaptchaResponse> {
