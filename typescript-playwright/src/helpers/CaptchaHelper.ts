@@ -1,7 +1,7 @@
 import type { APIRequestContext } from "@playwright/test";
-import { CommentApi } from "../api/CommentApi.ts";
-import type { CaptchaResponse, CaptchaData } from "../utils/types.ts";
-import { DEFAULT_ANSWER_TIME_MS } from "../utils/constants.ts";
+import { CommentApi } from "../api/CommentApi";
+import type { CaptchaResponse, CaptchaData } from "../utils/types";
+import { DEFAULT_ANSWER_TIME_MS } from "../utils/constants";
 
 export class CaptchaHelper {
   private readonly commentApi: CommentApi;

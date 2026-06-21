@@ -1,8 +1,8 @@
-import type { CategoryApi } from "../api/CategoryApi.ts";
-import type { CategoryDto } from "../utils/types.ts";
-import { statusIn } from "../utils/statusIn.ts";
-import { HTTP } from "../utils/constants.ts";
-import { step } from "../utils/decorators.ts";
+import type { CategoryApi } from "../api/CategoryApi";
+import type { CategoryDto } from "../utils/types";
+import { statusIn } from "../utils/statusIn";
+import { HTTP } from "../utils/constants";
+import { step } from "../utils/decorators";
 export class CategoryClient {
   private readonly api: CategoryApi;
 

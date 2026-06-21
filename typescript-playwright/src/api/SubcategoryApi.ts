@@ -1,6 +1,6 @@
 import type { APIRequestContext, APIResponse } from "@playwright/test";
-import { API_URL } from "../utils/constants.ts";
-import { mergeHeaders } from "../utils/headers.ts";
+import { API_URL } from "../utils/constants";
+import { mergeHeaders } from "../utils/headers";
 
 export class SubcategoryApi {
   private readonly request: APIRequestContext;

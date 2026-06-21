@@ -1,9 +1,9 @@
 import type { APIRequestContext, APIResponse } from "@playwright/test";
 import * as fs from "fs/promises";
 import * as path from "path";
-import type { PhotoPayload } from "../utils/types.ts";
-import { API_URL } from "../utils/constants.ts";
-import { mergeHeaders } from "../utils/headers.ts";
+import type { PhotoPayload } from "../utils/types";
+import { API_URL } from "../utils/constants";
+import { mergeHeaders } from "../utils/headers";
 
 export class PhotoApi {
   private readonly request: APIRequestContext;

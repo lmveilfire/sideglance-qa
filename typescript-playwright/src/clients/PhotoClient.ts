@@ -1,11 +1,11 @@
-import type { PhotoApi } from "../api/PhotoApi.ts";
-import type { PhotoDto, PhotoPayload } from "../utils/types.ts";
-import { statusIn } from "../utils/statusIn.ts";
-import { HTTP } from "../utils/constants.ts";
-import { step } from "../utils/decorators.ts";
+import type { PhotoApi } from "../api/PhotoApi";
+import type { PhotoDto, PhotoPayload } from "../utils/types";
+import { statusIn } from "../utils/statusIn";
+import { HTTP } from "../utils/constants";
+import { step } from "../utils/decorators";
 export class PhotoClient {
   private readonly api: PhotoApi;
-  
+
   constructor(api: PhotoApi) {
     this.api = api;
   }

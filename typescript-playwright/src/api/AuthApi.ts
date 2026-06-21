@@ -1,11 +1,11 @@
 import type { APIRequestContext, APIResponse } from "@playwright/test";
-import { mergeHeaders } from "../utils/headers.ts";
-import { API_URL } from "../utils/constants.ts";
-import type { LoginPayload, AuthResponse } from "@utils/types.ts";
+import { mergeHeaders } from "../utils/headers";
+import { API_URL } from "../utils/constants";
+import type { LoginPayload, AuthResponse } from "@utils/types";
 
 export class AuthApi {
   private readonly request: APIRequestContext;
-  
+
   constructor(request: APIRequestContext) {
     this.request = request;
   }

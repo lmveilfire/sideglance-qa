@@ -1,4 +1,4 @@
-import { expect } from "../fixtures/fixtures.ts";
+import { expect } from "../fixtures/fixtures";
 
 export const PhotoMatcher = {
   base: expect.objectContaining({
