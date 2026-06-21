@@ -26,5 +26,11 @@ export default defineConfig({
     },
   },
 
-  projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
+  projects: [{ 
+    name: "chromium", 
+    use: { 
+      ...devices["Desktop Chrome"],
+      channel: 'chrome',
+    } 
+  }],
 });
