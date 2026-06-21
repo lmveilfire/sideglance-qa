@@ -2,10 +2,15 @@ import type { APIRequestContext, APIResponse } from "@playwright/test";
 import { API_URL } from "../utils/constants.ts";
 
 export class CategoryApi {
+  private readonly request: APIRequestContext;
+  private readonly authHeaders: Record<string, string> = {};
   constructor(
-    private readonly request: APIRequestContext,
-    private readonly authHeaders: Record<string, string> = {},
-  ) {}
+    request:APIRequestContext,
+    authHeaders: Record<string, string>,
+  ) {
+    this.request = request;
+    this.authHeaders = authHeaders;
+  }
 
   async getAll(): Promise<APIResponse> {
     return this.request.get(`${API_URL}/api/categories`);

@@ -6,10 +6,16 @@ import { API_URL } from "../utils/constants.ts";
 import { mergeHeaders } from "../utils/headers.ts";
 
 export class PhotoApi {
+  private readonly request: APIRequestContext;
+  private readonly authHeaders: Record<string, string>;
+
   constructor(
-    private readonly request: APIRequestContext,
-    private readonly authHeaders: Record<string, string>,
-  ) {}
+    request: APIRequestContext,
+    authHeaders: Record<string, string>,
+  ) {
+    this.request = request;
+    this.authHeaders = authHeaders;
+  }
 
   private get headers(): Record<string, string> {
     return mergeHeaders(this.authHeaders);

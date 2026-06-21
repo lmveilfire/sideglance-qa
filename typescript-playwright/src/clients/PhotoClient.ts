@@ -4,7 +4,11 @@ import { statusIn } from "../utils/statusIn.ts";
 import { HTTP } from "../utils/constants.ts";
 import { step } from "../utils/decorators.ts";
 export class PhotoClient {
-  constructor(private readonly api: PhotoApi) {}
+  private readonly api: PhotoApi;
+  
+  constructor(api: PhotoApi) {
+    this.api = api;
+  }
 
   @step()
   async list(): Promise<PhotoDto[]> {

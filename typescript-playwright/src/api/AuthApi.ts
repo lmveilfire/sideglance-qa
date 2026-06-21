@@ -4,7 +4,11 @@ import { API_URL } from "../utils/constants.ts";
 import type { LoginPayload, AuthResponse } from "@utils/types.ts";
 
 export class AuthApi {
-  constructor(private readonly request: APIRequestContext) {}
+  private readonly request: APIRequestContext;
+  
+  constructor(request: APIRequestContext) {
+    this.request = request;
+  }
 
   private headers(custom?: Record<string, string>) {
     return mergeHeaders(custom);

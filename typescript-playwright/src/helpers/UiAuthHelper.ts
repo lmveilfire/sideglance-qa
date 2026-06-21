@@ -3,10 +3,16 @@ import type { AuthHelper } from "./AuthHelper.ts";
 import { step } from "../utils/decorators.ts";
 
 export class UiAuthHelper {
+  private readonly page: Page;
+  private readonly authHelper: AuthHelper;
+
   constructor(
-    private readonly page: Page,
-    private readonly authHelper: AuthHelper,
-  ) {}
+    page: Page,
+    authHelper: AuthHelper,
+  ) {
+    this.page = page;
+    this.authHelper = authHelper;
+  }
 
   @step("Авторизоваться как админ")
   async loginAsAdmin(redirectUrl = "/admin-panel/upload"): Promise<void> {
