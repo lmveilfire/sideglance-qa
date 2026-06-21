@@ -1,4 +1,4 @@
-name: CI Tests
+name: CI Tests Typescript Playwright
 
 on:
   workflow_dispatch:
@@ -40,10 +40,10 @@ jobs:
       - name: Cache Playwright Browsers
         uses: actions/cache@v4
         with:
-          path: ~/.cache/ms-playwright
+          path: /home/runner/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-${{ hashFiles('typescript-playwright/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-playwright-
+             playwright-chromium-
 
       - name: Install dependencies
         working-directory: typescript-playwright
@@ -53,6 +53,9 @@ jobs:
 
       - name: Install Playwright browsers
         working-directory: typescript-playwright
+        timeout-minutes: 15
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: /home/runner/.cache/ms-playwright
         run: npx playwright install chromium
 
       - name: Build frontend for Docker context
