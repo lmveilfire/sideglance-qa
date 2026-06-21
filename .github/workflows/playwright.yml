@@ -42,9 +42,17 @@ jobs:
         run: |
           npm ci
           npm install -D allure-playwright
+      - name: Fix libasound2 for Playwright
+        run: sudo apt-get install -y libasound2t64
+
+      - name: Install Playwright browsers
+        working-directory: typescript-playwright
+        run: npx playwright install --with-deps chromium
 
       - name: Build frontend for Docker context
         working-directory: ./app/frontend
+        env:
+          NODE_OPTIONS: "--max-old-space-size=4096"
         run: |
           npm ci
           npm run build:test
