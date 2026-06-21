@@ -1,6 +1,6 @@
 import type { Page } from "@playwright/test";
-import type { AuthHelper } from "./AuthHelper.ts";
-import { step } from "../utils/decorators.ts";
+import type { AuthHelper } from "./AuthHelper";
+import { step } from "../utils/decorators";
 
 export class UiAuthHelper {
   private readonly page: Page;

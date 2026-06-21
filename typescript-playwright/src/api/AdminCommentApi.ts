@@ -1,7 +1,7 @@
 import type { APIRequestContext, APIResponse } from "@playwright/test";
-import type { CommentStatus } from "../utils/types.ts";
-import { API_URL } from "../utils/constants.ts";
-import { mergeHeaders } from "../utils/headers.ts";
+import type { CommentStatus } from "../utils/types";
+import { API_URL } from "../utils/constants";
+import { mergeHeaders } from "../utils/headers";
 
 export class AdminCommentApi {
   private readonly request: APIRequestContext;

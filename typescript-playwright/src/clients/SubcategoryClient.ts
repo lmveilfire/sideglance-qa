@@ -1,11 +1,11 @@
-import type { SubcategoryApi } from "../api/SubcategoryApi.ts";
-import type { SubcategoryDto } from "../utils/types.ts";
-import { statusIn } from "../utils/statusIn.ts";
-import { HTTP } from "../utils/constants.ts";
-import { step } from "../utils/decorators.ts";
+import type { SubcategoryApi } from "../api/SubcategoryApi";
+import type { SubcategoryDto } from "../utils/types";
+import { statusIn } from "../utils/statusIn";
+import { HTTP } from "../utils/constants";
+import { step } from "../utils/decorators";
 export class SubcategoryClient {
   private readonly api: SubcategoryApi;
-  
+
   constructor(api: SubcategoryApi) {
     this.api = api;
   }

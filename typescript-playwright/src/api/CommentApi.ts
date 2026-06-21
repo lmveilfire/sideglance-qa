@@ -1,12 +1,12 @@
 import type { APIRequestContext, APIResponse } from "@playwright/test";
-import { DEFAULT_ANSWER_TIME_MS } from "../utils/constants.ts";
-import type { CaptchaData, CommentPayload } from "../utils/types.ts";
-import { API_URL } from "../utils/constants.ts";
-import { mergeHeaders } from "../utils/headers.ts";
+import { DEFAULT_ANSWER_TIME_MS } from "../utils/constants";
+import type { CaptchaData, CommentPayload } from "../utils/types";
+import { API_URL } from "../utils/constants";
+import { mergeHeaders } from "../utils/headers";
 
 export class CommentApi {
   private readonly request: APIRequestContext
-  
+
   constructor(request: APIRequestContext) {
     this.request = request;
   }

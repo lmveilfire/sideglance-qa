@@ -1,6 +1,6 @@
 import type { Page, Locator } from "@playwright/test";
-import { BasePage } from "./BasePage.ts";
-import { step } from "../utils/decorators.ts";
+import { BasePage } from "./BasePage";
+import { step } from "../utils/decorators";
 
 export class PhotoPage extends BasePage {
   constructor(page: Page) {

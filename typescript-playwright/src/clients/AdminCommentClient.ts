@@ -1,17 +1,17 @@
-import type { AdminCommentApi } from "../api/AdminCommentApi.ts";
+import type { AdminCommentApi } from "../api/AdminCommentApi";
 import type {
   AdminCommentDto,
   AdminCommentsPageResponse,
   CommentStatsDto,
   CommentStatus,
-} from "../utils/types.ts";
-import { statusIn } from "../utils/statusIn.ts";
-import { HTTP } from "../utils/constants.ts";
-import { step } from "../utils/decorators.ts";
+} from "../utils/types";
+import { statusIn } from "../utils/statusIn";
+import { HTTP } from "../utils/constants";
+import { step } from "../utils/decorators";
 
 export class AdminCommentClient {
   private readonly api: AdminCommentApi;
-  
+
   constructor( api: AdminCommentApi) {
     this.api = api;
   }

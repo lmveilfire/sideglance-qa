@@ -1,5 +1,5 @@
 import type { APIRequestContext, APIResponse } from "@playwright/test";
-import { API_URL } from "../utils/constants.ts";
+import { API_URL } from "../utils/constants";
 
 export class CategoryApi {
   private readonly request: APIRequestContext;
