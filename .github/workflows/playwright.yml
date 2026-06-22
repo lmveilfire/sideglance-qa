@@ -23,6 +23,7 @@ jobs:
           echo "TEST_DB_USERNAME=${{ secrets.TEST_DB_USERNAME }}" >> .env
           echo "TEST_DB_PASSWORD=${{ secrets.TEST_DB_PASSWORD }}" >> .env
           echo "APP_FILE_SERVE_SECRET=${{ secrets.APP_FILE_SERVE_SECRET }}" >> .env
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
