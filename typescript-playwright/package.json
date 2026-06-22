@@ -2,12 +2,11 @@
   "name": "sideglance-qa",
   "version": "1.0.0",
   "description": "SideGlance QA Automation Suite",
-  "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "playwright test",
-    "test:api": "playwright test --grep @api",
-    "test:e2e": "playwright test --grep @e2e",
+    "test": "npx playwright test",
+    "test:api": "npx playwright test --grep @api",
+    "test:e2e": "npx playwright test --grep @e2e",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -20,7 +19,7 @@
   "devDependencies": {
     "@eslint/js": "^9.39.4",
     "@faker-js/faker": "^10.4.0",
-    "@playwright/test": "1.44.1",
+    "@playwright/test": "^1.61.0",
     "@types/node": "^20.19.41",
     "allure-playwright": "^2.9.0",
     "dotenv": "^17.4.2",
@@ -28,7 +27,6 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-playwright": "^2.10.2",
     "globals": "^17.6.0",
-    "jiti": "^2.7.0",
     "prettier": "^3.8.4",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.61.0"
