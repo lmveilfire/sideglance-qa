@@ -51,13 +51,7 @@ jobs:
 
       - name: Install Playwright browsers
         working-directory: typescript-playwright
-        run: |
-          CHROMIUM_URL=$(npx playwright install chromium --dry-run 2>&1 | grep -oP 'https://[^\s]+\.zip' | head -1)
-          echo "URL: $CHROMIUM_URL"
-          mkdir -p ~/.cache/ms-playwright
-          curl -L "$CHROMIUM_URL" -o /tmp/chromium.zip
-          unzip -q /tmp/chromium.zip -d ~/.cache/ms-playwright/
-          rm /tmp/chromium.zip
+        run: npx playwright install --with-deps chromium
 
       - name: Build frontend for Docker context
         working-directory: ./app/frontend
