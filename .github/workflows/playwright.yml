@@ -24,6 +24,7 @@ jobs:
           echo "TEST_DB_PASSWORD=${{ secrets.TEST_DB_PASSWORD }}" >> .env
           echo "APP_FILE_SERVE_SECRET=${{ secrets.APP_FILE_SERVE_SECRET }}" >> .env
           echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
+          echo "app.allowed-origin=http://localhost" >> .env
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -43,11 +44,6 @@ jobs:
         run: |
           npm ci
           npm install -D allure-playwright
-
-      - name: Fix libasound2 for Playwright
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libasound2t64 libgbm1 libnss3 libxss1 libasound2t64
 
       - name: Install Playwright browsers
         working-directory: typescript-playwright
@@ -103,7 +99,7 @@ jobs:
         run: |
           curl -v http://localhost:8080/api/health
           curl -v http://localhost/health
-          
+
       - name: Run Playwright tests
         working-directory: typescript-playwright
         env:
