@@ -99,7 +99,11 @@ jobs:
             echo "Frontend did not start in time"
             exit 1
           fi
-
+      - name: Check ports
+        run: |
+          curl -v http://localhost:8080/api/health
+          curl -v http://localhost/health
+          
       - name: Run Playwright tests
         working-directory: typescript-playwright
         env:
