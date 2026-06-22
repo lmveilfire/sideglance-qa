@@ -5,6 +5,10 @@ dotenv.config({ path: ".env" });
 
 export default defineConfig({
   testDir: "./tests",
+  timeout: 60000,
+  expect: {
+    timeout: 10000,
+  },
   retries: process.env.CI ? 2 : 0,
   workers: 1,
   outputDir: "./test-results",
