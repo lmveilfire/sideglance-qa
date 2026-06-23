@@ -1,6 +1,6 @@
 import { test, expect } from "../../../src/fixtures/fixtures.ts";
-import { AdminUploadPage } from "../../../src/pages/AdminUploadPage";
-import { generate } from "../../../src/utils/generators";
+import { AdminUploadPage } from "../../../src/pages/AdminUploadPage.ts";
+import { generate } from "../../../src/utils/generators.ts";
 
 test("Администратор может отменить создание новой категории и подкатегории при загрузке фото", async ({
   uiAuthHelper,

@@ -1,6 +1,6 @@
 import { test, expect } from "../../../src/fixtures/fixtures.ts";
-import { generate } from "../../../src/utils/generators";
-import { AdminCommentsPage } from "../../../src/pages/AdminCommentsPage";
+import { generate } from "../../../src/utils/generators.ts";
+import { AdminCommentsPage } from "../../../src/pages/AdminCommentsPage.ts";
 
 test("Администратор удаляет комментарий, и он полностью исчезает из системы", async ({
   uiAuthHelper,

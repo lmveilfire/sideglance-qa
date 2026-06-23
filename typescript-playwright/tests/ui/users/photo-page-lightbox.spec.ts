@@ -1,7 +1,7 @@
 import { test, expect } from "../../../src/fixtures/fixtures.ts";
-import { generate } from "../../../src/utils/generators";
-import { GalleryPage } from "../../../src/pages/GalleryPage";
-import { PhotoPage } from "../../../src/pages/PhotoPage";
+import { generate } from "../../../src/utils/generators.ts";
+import { GalleryPage } from "../../../src/pages/GalleryPage.ts";
+import { PhotoPage } from "../../../src/pages/PhotoPage.ts";
 
 test("Пользователь успешно открывает и закрывает полноэкранный просмотр (лайтбокс) на странице фотографии", async ({
   page,

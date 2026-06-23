@@ -1,7 +1,7 @@
 import { test, expect } from "../../../src/fixtures/fixtures.ts";
-import { generate } from "../../../src/utils/generators";
-import { GalleryPage } from "../../../src/pages/GalleryPage";
-import { AdminUploadPage } from "../../../src/pages/AdminUploadPage";
+import { generate } from "../../../src/utils/generators.ts";
+import { GalleryPage } from "../../../src/pages/GalleryPage.ts";
+import { AdminUploadPage } from "../../../src/pages/AdminUploadPage.ts";
 
 test("Администратор не может удалить категорию, которая содержит фотографии", async ({
   uiAuthHelper,

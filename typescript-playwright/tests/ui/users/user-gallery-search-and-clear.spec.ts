@@ -1,6 +1,6 @@
 import { test, expect } from "../../../src/fixtures/fixtures.ts";
-import { generate } from "../../../src/utils/generators";
-import { GalleryPage } from "../../../src/pages/GalleryPage";
+import { generate } from "../../../src/utils/generators.ts";
+import { GalleryPage } from "../../../src/pages/GalleryPage.ts";
 
 test("Поиск фотографии по названию и проверка сброса результатов поиска", async ({
   page,

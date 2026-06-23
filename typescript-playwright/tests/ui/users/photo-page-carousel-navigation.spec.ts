@@ -1,7 +1,7 @@
 import { test, expect } from "../../../src/fixtures/fixtures.ts";
-import { generate } from "../../../src/utils/generators";
-import { GalleryPage } from "../../../src/pages/GalleryPage";
-import { PhotoPage } from "@pages/PhotoPage";
+import { generate } from "../../../src/utils/generators.ts";
+import { GalleryPage } from "../../../src/pages/GalleryPage.ts";
+import { PhotoPage } from "@pages/PhotoPage.ts";
 
 test("Навигация по фотографиям в карусели и проверка блокировки крайних кнопок", async ({
   page,
