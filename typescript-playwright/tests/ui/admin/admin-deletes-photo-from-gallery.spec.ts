@@ -1,6 +1,6 @@
 import { test, expect } from "../../../src/fixtures/fixtures.ts";
-import { generate } from "../../../src/utils/generators";
-import { GalleryPage } from "../../../src/pages/GalleryPage";
+import { generate } from "../../../src/utils/generators.ts";
+import { GalleryPage } from "../../../src/pages/GalleryPage.ts";
 
 test("Администратор удаляет фотографию, и она исчезает из галереи", async ({
   uiAuthHelper,

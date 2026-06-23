@@ -1,7 +1,7 @@
 import { test, expect } from "../../../src/fixtures/fixtures.ts";
-import { LoginPage } from "../../../src/pages/LoginPage";
-import { AdminUploadPage } from "../../../src/pages/AdminUploadPage";
-import { ADMIN_USERNAME, ADMIN_PASSWORD } from "../../../src/utils/constants";
+import { LoginPage } from "../../../src/pages/LoginPage.ts";
+import { AdminUploadPage } from "../../../src/pages/AdminUploadPage.ts";
+import { ADMIN_USERNAME, ADMIN_PASSWORD } from "../../../src/utils/constants.ts";
 
 test("Успешная авторизация администратора с валидными данными и перенаправление в админ-панель", async ({
   page,

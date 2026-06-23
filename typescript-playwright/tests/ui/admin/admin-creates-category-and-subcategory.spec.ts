@@ -1,7 +1,7 @@
 import { test, expect } from "../../../src/fixtures/fixtures.ts";
-import { AdminUploadPage } from "../../../src/pages/AdminUploadPage";
-import { GalleryPage } from "../../../src/pages/GalleryPage";
-import { generate } from "../../../src/utils/generators";
+import { AdminUploadPage } from "../../../src/pages/AdminUploadPage.ts";
+import { GalleryPage } from "../../../src/pages/GalleryPage.ts";
+import { generate } from "../../../src/utils/generators.ts";
 
 test("Администратор создает категорию и подкатегорию и видит их в боковой панели", async ({
   uiAuthHelper,

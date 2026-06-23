@@ -1,8 +1,8 @@
 import { test, expect } from "../../../src/fixtures/fixtures.ts";
-import { generate } from "../../../src/utils/generators";
-import { GalleryPage } from "../../../src/pages/GalleryPage";
-import { AdminCommentsPage } from "../../../src/pages/AdminCommentsPage";
-import { PhotoPage } from "../../../src/pages/PhotoPage";
+import { generate } from "../../../src/utils/generators.ts";
+import { GalleryPage } from "../../../src/pages/GalleryPage.ts";
+import { AdminCommentsPage } from "../../../src/pages/AdminCommentsPage.ts";
+import { PhotoPage } from "../../../src/pages/PhotoPage.ts";
 
 test("Администратор одобряет комментарий, и он появляется на странице фотографии", async ({
   uiAuthHelper,

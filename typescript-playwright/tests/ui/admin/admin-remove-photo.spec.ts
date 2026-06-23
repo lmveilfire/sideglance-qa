@@ -1,6 +1,6 @@
 import { test, expect } from "../../../src/fixtures/fixtures.ts";
-import { generate } from "../../../src/utils/generators";
-import { AdminUploadPage } from "../../../src/pages/AdminUploadPage";
+import { generate } from "../../../src/utils/generators.ts";
+import { AdminUploadPage } from "../../../src/pages/AdminUploadPage.ts";
 
 test("Администратор удаляет прикреплённый файл фотографии из формы загрузки", async ({
   uiAuthHelper,
