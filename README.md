@@ -79,6 +79,8 @@ flowchart TD
 ### 2. Python/pytest
 
 ## Архитектура 
+
+```
 python-pytest/           
 ├── src
 │   ├── api                     # Слой транспорта: чистые HTTP-обёртки
@@ -94,3 +96,4 @@ python-pytest/
 ├── requirements-dev.txt        # Зависимости для локальной разработки и линтинга
 ├── requirements-test.txt       # Зависимости, необходимые строго для прогона тестов
 └── requirements.txt            # Базовый список зависимостей проекта
+```
