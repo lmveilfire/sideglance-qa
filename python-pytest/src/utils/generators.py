@@ -11,7 +11,7 @@ from src.utils.types import CategoryPayload, CommentPayload, PhotoPayload
 
 _fake = Faker()
 
-_FIXTURES_IMAGES_DIR = Path(__file__).resolve().parents[2] / "src" / "fixtures" / "images"
+_FIXTURES_IMAGES_DIR = Path(__file__).resolve().parents[2] / "src" / "resources" / "images"
 
 
 class Generate:

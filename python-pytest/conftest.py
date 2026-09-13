@@ -46,7 +46,6 @@ class AllureAPISession(requests.Session):
     def _record_interaction(
         self, response: requests.Response, *args: Any, **kwargs: Any
     ) -> requests.Response:
-        """Hook, вызываемый после каждого HTTP-ответа."""
         request = response.request
 
         self._last_request = {
