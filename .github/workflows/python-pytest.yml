@@ -1,9 +1,6 @@
 name: CI Tests Python API
 
 on:
-  push:
-    branches:
-      - python-pytest
   workflow_dispatch:
 
 
