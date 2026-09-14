@@ -1,7 +1,11 @@
 name: CI Tests Python API
 
 on:
+  push:
+    branches:
+      - python-pytest
   workflow_dispatch:
+
 
 jobs:
   tests:
@@ -28,7 +32,7 @@ jobs:
       - name: Ruff format check
         working-directory: python-pytest
         run: ruff format --check .
-        
+
       - name: Ruff lint
         working-directory: python-pytest
         run: ruff check .

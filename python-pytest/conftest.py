@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import contextlib
 import json
 import os
 from collections.abc import Generator
@@ -8,7 +9,6 @@ from typing import Any
 
 import pytest
 import requests
-import contextlib
 from dotenv import load_dotenv
 from faker import Faker
 
