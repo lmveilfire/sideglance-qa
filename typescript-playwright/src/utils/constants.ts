@@ -29,6 +29,6 @@ export const LIMITS = {
   comment: { authorMax: 100, textMax: 1000 },
 } as const;
 
-export const IVALID_TOKEN =
+export const INVALID_TOKEN =
   "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiZXhwIjo5OTk5OTk5OTk5fQ.invalid-signature";
 export const DEFAULT_ANSWER_TIME_MS = 3000;

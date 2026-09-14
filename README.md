@@ -1,14 +1,20 @@
 # sideglance-qa
 > E2E и API-тесты для галереи [sideglance.ru](https://sideglance.ru)  
-> TypeScript/Playwright + Python/Selenium/Pythest | CI/CD в GitHub Actions | Allure отчёты
+> TypeScript/Playwright + Python/Pythest | CI/CD в GitHub Actions | Allure отчёты
 
 [![CI Tests](https://github.com/lmveilfire/sideglance-qa/actions/workflows/playwright.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions)
 [![Playwright](https://img.shields.io/badge/Playwright-TypeScript-blue)](https://playwright.dev)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-### 1. Архитектура
 
-## Typescript-playwright
+### Безопасность
+* Все секреты — в GitHub Secrets
+* Токены не коммитятся, не логируются
+* Тестовые данные изолированы от прода
+
+### 1. Typescript-playwright
+
+## Архитектура 
 ```
 typescript-playwright/           
 ├── src
@@ -65,12 +71,29 @@ flowchart TD
 11. Архивирует Playwright и Allure отчёты как артефакты
 12. Очищает окружение: останавливает контейнеры и удаляет volumes
 
-### Безопасность
-* Все секреты — в GitHub Secrets
-* Токены не коммитятся, не логируются
-* Тестовые данные изолированы от продакшена
-
 ### Результаты прогона
 1. Перейти по вкладке Actions
 2. Кликнуть на workflow CI Tests Typescript Playwright или CI Tests Python
 3. Открыть результаты тестов
+
+### 2. Python/pytest
+
+## Архитектура 
+
+```
+python-pytest/           
+├── src
+│   ├── api                     # Слой транспорта: чистые HTTP-обёртки
+│   ├── clients                 # Слой клиентов: бизнес-методы поверх Api
+│   ├── resources               # Тестовые ассеты (статические изображения для проверки сценариев загрузки фото)
+│   ├── helpers                 # Хелперы: авторизация, обход капчи и композитные шаги подготовки данных
+│   └── utils                   # Утилиты: генераторы данных, декораторы @step, типы
+├── tests                       # Тесты
+│   └── api                     # API-тесты: контракты, негативные сценарии
+├── conftest.py                 # Конфигурация Pytest: общие фикстуры и хуки
+├── pyproject.toml              # Настройки инструментов разработки (линтер Ruff, форматирование)
+├── pytest.ini                  # Основные настройки запуска Pytest (маркеры, логирование)
+├── requirements-dev.txt        # Зависимости для локальной разработки и линтинга
+├── requirements-test.txt       # Зависимости, необходимые строго для прогона тестов
+└── requirements.txt            # Базовый список зависимостей проекта
+```

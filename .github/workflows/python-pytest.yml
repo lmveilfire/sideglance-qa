@@ -1,0 +1,120 @@
+name: CI Tests Python API
+
+on:
+  workflow_dispatch:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Checkout private app code
+        uses: actions/checkout@v4
+        with:
+          repository: lmveilfire/sideglance
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          path: ./app
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install all dependencies
+        run: pip install -r requirements.txt -r requirements-test.txt -r requirements-dev.txt
+
+      - name: Ruff format check
+        run: ruff format --check .
+      - name: Ruff lint
+        run: ruff check .
+      - name: mypy
+        run: mypy src tests conftest.py
+
+      - name: Create .env from secrets
+        working-directory: ./app
+        run: |
+          echo "TEST_ADMIN_USERNAME=${{ secrets.TEST_ADMIN_USERNAME }}" >> .env
+          echo "TEST_ADMIN_PASSWORD=${{ secrets.TEST_ADMIN_PASSWORD }}" >> .env
+          echo "TEST_DB_USERNAME=${{ secrets.TEST_DB_USERNAME }}" >> .env
+          echo "TEST_DB_PASSWORD=${{ secrets.TEST_DB_PASSWORD }}" >> .env
+          echo "APP_FILE_SERVE_SECRET=${{ secrets.APP_FILE_SERVE_SECRET }}" >> .env
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
+          echo "app.allowed-origin=http://localhost" >> .env
+
+      - name: Build frontend for Docker context
+        working-directory: ./app/frontend
+        env:
+          NODE_OPTIONS: "--max-old-space-size=4096"
+        run: |
+          npm ci
+          npm run build:test
+
+      - name: Start services with CI Compose
+        working-directory: ./app
+        run: docker compose -f docker-compose.tests.yml up -d --build
+
+      - name: Wait for backend to be ready
+        run: |
+          for i in {1..30}; do
+            if curl -s http://localhost:8080/api/health > /dev/null; then
+              echo "Backend ready"
+              BACKEND_READY=true
+              break
+            fi
+            echo "Waiting for backend... ($i/30)"
+            sleep 3
+          done
+          echo "Backend did not start in time"
+
+          if [ "$BACKEND_READY" = "false" ]; then
+            echo "Backend did not start in time"
+            exit 1
+          fi
+
+      - name: Wait for frontend to be ready
+        run: |
+          for i in {1..30}; do
+            if curl -s http://localhost/health > /dev/null; then
+              echo "Frontend ready"
+              FRONTEND_READY=true
+              break
+            fi
+            echo "Waiting for frontend... ($i/30)"
+            sleep 3
+          done
+
+          if [ "$FRONTEND_READY" = "false" ]; then
+            echo "Frontend did not start in time"
+            exit 1
+          fi
+
+      - name: Run pytest
+        env:
+          API_URL: http://localhost:8080
+          BASE_URL: http://localhost
+          TEST_ADMIN_USERNAME: ${{ secrets.TEST_ADMIN_USERNAME }}
+          TEST_ADMIN_PASSWORD: ${{ secrets.TEST_ADMIN_PASSWORD }}
+        run: pytest -m api
+
+      - name: Upload HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-html-report
+          path: reports/
+          retention-days: 7
+
+      - name: Upload Allure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results/
+          retention-days: 7
+          include-hidden-files: true
+
+      - name: Stop services (cleanup)
+        if: always()
+        working-directory: ./app
+        run: docker compose -f docker-compose.tests.yml down -v
