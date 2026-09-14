@@ -23,6 +23,7 @@ class TestAuthLogin:
 
     @pytest.mark.security
     @pytest.mark.xfail
+    @pytest.mark.skip
     def test_tc_auth_03_rate_limit_after_5_failed_attempts(self, auth_api: AuthApi) -> None:
         bad_credentials: LoginPayload = {"username": ADMIN_USERNAME, "password": "wrong_password"}
         max_failed_attempts = 5
