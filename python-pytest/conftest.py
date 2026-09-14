@@ -97,6 +97,7 @@ def _format_for_allure(data: dict[str, Any] | None) -> str:
 
     return "\n\n".join(lines)
 
+
 @pytest.fixture(scope="session")
 def api_url() -> str:
     return os.getenv("API_URL", "http://localhost:8080")
