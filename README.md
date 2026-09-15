@@ -8,7 +8,7 @@
 [![CI Tests Typescript](https://github.com/lmveilfire/sideglance-qa/actions/workflows/playwright.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions/workflows/playwright.yml)
 [![CI Tests Python](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-pytest.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-pytest.yml)
 
-## Архитектура запуска и CI/CD
+### Архитектура запуска и CI/CD
 У каждого стека свой собственный workflow-файл в .github/workflows/, со своим набором инструментов сборки. Но общая канва одна и та же:
 1. Чекаут тестов. Пайплайн забирает кодовую базу автотестов из этого репозитория.
 2. Чекаут приватного приложения. По токену подтягивается закрытый репозиторий с исходным кодом SUT (frontend + backend). Образы собираются из исходников прямо на раннере (docker compose ... --build).
@@ -20,13 +20,13 @@
 8. Артефакты. Сохраняет отчёты Allure и (там, где применимо для конкретного стека) скриншоты/видео падений.
 9. Очистка. Полностью останавливает контейнеры и удаляет Docker Volumes.
 
-## Структура тестовых фреймворков
+### Структура тестовых фреймворков
 Тестирование одной и той же бизнес-логики приложения (авторизация, модерация, комментарии) реализовано независимо в изолированных папках с разным набором технических решений в каждой:
 
 - /typescript-playwright — E2E и API-тесты на `TypeScript` + `Playwright`. Линтинг (`ESLint`), форматирование (`Prettier`), генерация данных (`@faker-js/faker`).
 - /python-pytest — API-тесты на `Python` + `pytest` со строгой типизацией через `mypy --strict` (в `Python`, в отличие от `TypeScript`, это не встроенная возможность языка, а отдельно настроенный и поддерживаемый процесс).
 - /java-automation API-тесты на Java 21 + RestAssured (в разработке, планируется интеграция Testcontainers и WireMock)
 
-## Безопасность
+### Безопасность
 * Все секреты хранятся в GitHub Secrets.
 * Тестовые данные изолированы от прода.

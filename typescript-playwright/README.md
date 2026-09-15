@@ -3,16 +3,16 @@
 
 [![CI Tests](https://github.com/lmveilfire/sideglance-qa/actions/workflows/playwright.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions/workflows/playwright.yml)
 [![Playwright](https://img.shields.io/badge/Playwright-TypeScript-blue)](https://playwright.dev)
-```
-Стек технологий: 
+
+### Стек технологий: 
 **Язык**: TypeScript 
 **Тестовый движок**: Playwright Test
 **Качество кода**: ESLint (статический анализ) + Prettier (форматирование)
 **Тестовые данные**: @faker-js/faker
 **Управление окружением**: dotenv (конфигурация через `.env` файлы)
 **Отчетность**: Allure Report
-```
-## Архитектура
+
+### Архитектура
 ```
 typescript-playwright/           
 ├── src
@@ -85,7 +85,7 @@ flowchart TD
 13. Архивирует Playwright и Allure отчёты как артефакты GitHub Actions
 14. Очищает окружение: останавливает контейнеры и удаляет volumes
 
-## Осознанные ограничения:
+### Осознанные ограничения:
 **Тест на рейт-лимит логина изолирован от общего прогона** 
 
 
