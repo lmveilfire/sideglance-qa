@@ -3,7 +3,7 @@
 
 [![CI Tests](https://github.com/lmveilfire/sideglance-qa/actions/workflows/playwright.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions/workflows/playwright.yml)
 [![TypeScript](https://img.shields.io/badge/TypeScript-blue)](https://www.typescriptlang.org/)
-[![Playwright](https://img.shields.io/badge/Playwright-TypeScript-blue)](https://playwright.dev)
+[![Playwright](https://img.shields.io/badge/Playwright-green)](https://playwright.dev)
 
 ### Стек технологий: 
 
