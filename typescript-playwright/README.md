@@ -2,14 +2,26 @@
 > E2E и API-тесты для галереи [sideglance.ru](https://sideglance.ru)
 
 [![CI Tests](https://github.com/lmveilfire/sideglance-qa/actions/workflows/playwright.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions/workflows/playwright.yml)
+[![Typescript](https://img.shields.io/badge/Typescript-blue)](https://www.typescriptlang.org/)
 [![Playwright](https://img.shields.io/badge/Playwright-TypeScript-blue)](https://playwright.dev)
 
 ### Стек технологий: 
+
 **Язык**: TypeScript 
+
+
 **Тестовый движок**: Playwright Test
+
+
 **Качество кода**: ESLint (статический анализ) + Prettier (форматирование)
+
+
 **Тестовые данные**: @faker-js/faker
+
+
 **Управление окружением**: dotenv (конфигурация через `.env` файлы)
+
+
 **Отчетность**: Allure Report
 
 ### Архитектура

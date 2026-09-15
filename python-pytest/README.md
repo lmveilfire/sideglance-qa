@@ -1,7 +1,9 @@
 > API-тесты для галереи [sideglance.ru](https://sideglance.ru)
 
 [![CI Tests](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-pytest.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-pytest.yml)
+[![Python](https://img.shields.io/badge/Python-3.10-blue)](https://www.python.org)
 [![Pytest](https://img.shields.io/badge/Pytest-Python-blue)](https://docs.pytest.org/)
+[![mypy](https://img.shields.io/badge/mypy-strict-brightgreen)](https://mypy-lang.org)
 
 ### Стек технологий:
 
