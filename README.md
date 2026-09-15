@@ -1,99 +1,32 @@
-# sideglance-qa
-> E2E и API-тесты для галереи [sideglance.ru](https://sideglance.ru)  
-> TypeScript/Playwright + Python/Pythest | CI/CD в GitHub Actions | Allure отчёты
+# Multi-Stack QA Automation Portfolio
+Демонстрационный репозиторий с тестовыми фреймворками на разных стеках (TypeScript, Python; Java в разработке) для сквозного тестирования (API/E2E) изолированного full-stack приложения: веб-галерея авторских пейзажных фотографий с ролевой моделью пользователей и админкой модерации комментариев.
 
-[![CI Tests](https://github.com/lmveilfire/sideglance-qa/actions/workflows/playwright.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions)
-[![Playwright](https://img.shields.io/badge/Playwright-TypeScript-blue)](https://playwright.dev)
+Безопасность и NDA: Исходный код самого тестируемого приложения и базы данных закрытый и в этом репозитории отсутствует. Здесь только код тестовых фреймворков и конфигурация CI/CD.
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+[![CI Tests Typescript](https://github.com/lmveilfire/sideglance-qa/actions/workflows/playwright.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions/workflows/playwright.yml)
+[![CI Tests Python](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-pytest.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-pytest.yml)
+
+### Архитектура запуска и CI/CD
+У каждого стека свой собственный workflow-файл в .github/workflows/, со своим набором инструментов сборки. Но общая канва одна и та же:
+1. Чекаут тестов. Пайплайн забирает кодовую базу автотестов из этого репозитория.
+2. Чекаут приватного приложения. По токену подтягивается закрытый репозиторий с исходным кодом SUT (frontend + backend). Образы собираются из исходников прямо на раннере (docker compose ... --build).
+3. Конфигурация. Динамически собирает .env файлы для тестового контура из GitHub Secrets.
+4. Зависимости стека. Устанавливает окружение конкретного языка (детали см. в README каждого фреймворка).
+5. Оркестрация. Через Docker Compose поднимается изолированный тестовый контур: PostgreSQL + Backend + Frontend с настроенными healthcheck-ами.
+6. Верификация готовности. В цикле опрашивает сервисы через curl, пока оба не станут доступны.
+7. Прогон тестов. Запускает автотесты конкретного стека напрямую на раннере. 
+8. Артефакты. Сохраняет отчёты Allure и (там, где применимо для конкретного стека) скриншоты/видео падений.
+9. Очистка. Полностью останавливает контейнеры и удаляет Docker Volumes.
+
+### Структура тестовых фреймворков
+Тестирование одной и той же бизнес-логики приложения (авторизация, модерация, комментарии) реализовано независимо в изолированных папках с разным набором технических решений в каждой:
+
+- /typescript-playwright — E2E и API-тесты на `TypeScript` + `Playwright`. Линтинг (`ESLint`), форматирование (`Prettier`), генерация данных (`@faker-js/faker`).
+- /python-pytest — API-тесты на `Python` + `pytest` со строгой типизацией через `mypy --strict` (в `Python`, в отличие от `TypeScript`, это не встроенная возможность языка, а отдельно настроенный и поддерживаемый процесс).
+- /java-automation API-тесты на Java 21 + RestAssured (в разработке, планируется интеграция Testcontainers и WireMock)
 
 ### Безопасность
-* Все секреты — в GitHub Secrets
-* Токены не коммитятся, не логируются
-* Тестовые данные изолированы от прода
-
-### 1. Typescript-playwright
-
-## Архитектура 
-```
-typescript-playwright/           
-├── src
-│   ├── api                     # Слой транспорта: чистые HTTP-обёртки
-│   ├── clients                 # Слой клиентов: бизнес-методы поверх Api
-│   ├── fixtures                # Изолированные фикстуры: auth, cleanup
-│   ├── helpers                 # Хелперы: генераторы данных, декораторы @step, statusIn
-│   ├── pages                   # Page Objects для UI-тестов
-│   └── utils                   # Утилиты
-├── tests                       # Тесты
-│   ├── api                     # API-тесты: контракты, негативные сценарии, rate-limit
-│   └── ui                      # UI-тесты
-├── package.json                # Скрипты, зависимости, typescript
-├── playwright.config.ts        # Конфиг: окружения, ретраи, отчёты
-└── tsconfig.json
- 
-```
-
-### Ключевые принципы
-
-## Typescript/Playwright
-
-```mermaid
-flowchart TD
-    A["Test Layer
-    test TC-CAT-01"] -->|использует| B["Client Layer
-    CategoryClient.create
-    Promise<CategoryDto>"]
-    B -->|делегирует| C["API Layer
-    CategoryApi.create
-    Promise<APIResponse>"]
-    C -->|использует| D["Playwright
-    APIRequestContext"]
-    
-    style A fill:#e1f5fe,stroke:#01579b
-    style B fill:#e8f5e9,stroke:#2e7d32
-    style C fill:#fff3e0,stroke:#ef6c00
-    style D fill:#f3e5f5,stroke:#7b1fa2
-```
-
-### CI/CD
-
-## Playwright.yml
-1. Чекаутит приватный репо с кодом приложения
-2. Создаёт .env из GitHub Secrets
-3. Восстанавливает кэш node_modules из предыдущих запусков (по хэшу package-lock.json)
-4. Устанавливает Node.js 24 и зависимости через npm ci
-5. Устанавливает браузер Chromium и системные зависимости
-6. Собирает фронтенд (React) с увеличенным лимитом памяти
-7. Собирает бэкенд (Spring) и фронтенд в Docker
-8. Поднимает окружение (PostgreSQL, backend, frontend) с healthcheck-ами
-9. Ожидает готовности backend и frontend через curl в цикле
-10. Запускает Playwright-тесты с изоляцией
-11. Архивирует Playwright и Allure отчёты как артефакты
-12. Очищает окружение: останавливает контейнеры и удаляет volumes
-
-### Результаты прогона
-1. Перейти по вкладке Actions
-2. Кликнуть на workflow CI Tests Typescript Playwright или CI Tests Python
-3. Открыть результаты тестов
-
-### 2. Python/pytest
-
-## Архитектура 
-
-```
-python-pytest/           
-├── src
-│   ├── api                     # Слой транспорта: чистые HTTP-обёртки
-│   ├── clients                 # Слой клиентов: бизнес-методы поверх Api
-│   ├── resources               # Тестовые ассеты (статические изображения для проверки сценариев загрузки фото)
-│   ├── helpers                 # Хелперы: авторизация, обход капчи и композитные шаги подготовки данных
-│   └── utils                   # Утилиты: генераторы данных, декораторы @step, типы
-├── tests                       # Тесты
-│   └── api                     # API-тесты: контракты, негативные сценарии
-├── conftest.py                 # Конфигурация Pytest: общие фикстуры и хуки
-├── pyproject.toml              # Настройки инструментов разработки (линтер Ruff, форматирование)
-├── pytest.ini                  # Основные настройки запуска Pytest (маркеры, логирование)
-├── requirements-dev.txt        # Зависимости для локальной разработки и линтинга
-├── requirements-test.txt       # Зависимости, необходимые строго для прогона тестов
-└── requirements.txt            # Базовый список зависимостей проекта
-```
+* Все секреты хранятся в GitHub Secrets.
+* Тестовые данные изолированы от прода.
