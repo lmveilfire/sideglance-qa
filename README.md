@@ -25,7 +25,6 @@
 
 - /typescript-playwright — E2E и API-тесты на `TypeScript` + `Playwright`. Линтинг (`ESLint`), форматирование (`Prettier`), генерация данных (`@faker-js/faker`).
 - /python-pytest — API-тесты на `Python` + `pytest` со строгой типизацией через `mypy --strict` (в `Python`, в отличие от `TypeScript`, это не встроенная возможность языка, а отдельно настроенный и поддерживаемый процесс).
-- /java-automation API-тесты на Java 21 + RestAssured (в разработке, планируется интеграция Testcontainers и WireMock)
 
 ### Безопасность
 * Все секреты хранятся в GitHub Secrets.
