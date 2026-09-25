@@ -23,19 +23,19 @@ jobs:
           cache: 'pip'
 
       - name: Install all dependencies
-        working-directory: python-pytest
+        working-directory: python
         run: pip install -r requirements.txt -r requirements-test.txt -r requirements-dev.txt
 
       - name: Ruff format check
-        working-directory: python-pytest
+        working-directory: python
         run: ruff format --check .
 
       - name: Ruff lint
-        working-directory: python-pytest
+        working-directory: python
         run: ruff check .
 
       - name: mypy
-        working-directory: python-pytest
+        working-directory: python
         run: mypy src tests conftest.py
 
       - name: Create .env from secrets
