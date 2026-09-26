@@ -36,7 +36,7 @@ jobs:
 
       - name: mypy
         working-directory: python
-        run: mypy src tests conftest.py
+        run:  mypy src/api src/clients src/helpers/auth_helper.py src/helpers/captcha_helper.py src/utils tests/api
 
       - name: Create .env from secrets
         working-directory: ./app
@@ -97,20 +97,20 @@ jobs:
           fi
 
       - name: Run pytest
-        working-directory: python-pytest
+        working-directory: python
         env:
           API_URL: http://localhost:8080
           BASE_URL: http://localhost
           TEST_ADMIN_USERNAME: ${{ secrets.TEST_ADMIN_USERNAME }}
           TEST_ADMIN_PASSWORD: ${{ secrets.TEST_ADMIN_PASSWORD }}
-        run: pytest -m api
+        run: pytest -m api tests/api
 
       - name: Upload HTML report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: pytest-html-report
-          path: python-pytest/reports/
+          path: python/reports/
           retention-days: 7
 
       - name: Upload Allure results
@@ -118,7 +118,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: allure-results
-          path: python-pytest/allure-results/
+          path: python/allure-results/
           retention-days: 7
           include-hidden-files: true
 
