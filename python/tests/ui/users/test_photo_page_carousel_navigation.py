@@ -21,16 +21,16 @@ async def test_photo_page_carousel_navigation(
 
     await gallery_page.goto()
     await gallery_page.select_category_by_name(category.name)
-    await gallery_page.open_photo_by_alt(photo_list[0].title)
+    await gallery_page.open_photo_by_alt(photo_list[1].title)
 
-    await expect(photo_page.photo_by_alt(photo_list[0].title)).to_be_visible()
+    await expect(photo_page.photo_by_alt(photo_list[1].title)).to_be_visible()
     await expect(photo_page.carousel_prev_btn).to_be_disabled()
 
     await photo_page.go_next()
 
-    await expect(photo_page.photo_by_alt(photo_list[1].title)).to_be_visible()
+    await expect(photo_page.photo_by_alt(photo_list[0].title)).to_be_visible()
     await expect(photo_page.carousel_next_btn).to_be_disabled()
 
     await photo_page.go_prev()
 
-    await expect(photo_page.photo_by_alt(photo_list[0].title)).to_be_visible()
+    await expect(photo_page.photo_by_alt(photo_list[1].title)).to_be_visible()
