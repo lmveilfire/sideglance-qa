@@ -2,6 +2,7 @@ import allure
 import pytest
 
 from src.utils.generators import Generate
+from src.utils.models import SubcategoryDto
 
 
 @pytest.mark.api
@@ -12,7 +13,7 @@ def test_api_subcategory_list_contains_all_created(category_client, subcategory_
     category = category_client.create(Generate.category_data().name)
     subcategories_count = 10
 
-    created: list = []
+    created: list[SubcategoryDto] = []
 
     for _ in range(subcategories_count):
         subcategory = subcategory_client.create(category.id, Generate.category_data().name)
