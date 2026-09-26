@@ -1,9 +1,11 @@
 import allure
+import pytest
 from playwright.async_api import expect
 
 from src.helpers.helpers import create_photo_with_category
 
 
+@pytest.mark.ui
 @allure.title("Защита данных: невозможность удаления категории, содержащей фотографии")
 async def test_admin_cannot_delete_category_with_photos(
     photo_upload_page, ui_auth_helper, gallery_page, category_client, photo_client

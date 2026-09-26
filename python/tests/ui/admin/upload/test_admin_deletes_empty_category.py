@@ -1,9 +1,11 @@
 import allure
+import pytest
 from playwright.async_api import expect
 
 from src.utils.generators import Generate
 
 
+@pytest.mark.ui
 @allure.title("Удаление пустой категории")
 async def test_admin_deletes_empty_category(
     gallery_page,

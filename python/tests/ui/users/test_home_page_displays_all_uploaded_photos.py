@@ -1,10 +1,12 @@
 import allure
+import pytest
 from playwright.async_api import expect
 
 from src.helpers.helpers import create_photo_list
 from src.utils.generators import Generate
 
 
+@pytest.mark.ui
 @allure.title("Отображение всех загруженных фотографий на главной странице галереи")
 async def test_home_page_displays_all_uploaded_photos(
     gallery_page,

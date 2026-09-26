@@ -1,9 +1,11 @@
 import allure
+import pytest
 from playwright.async_api import expect
 
 from src.utils.generators import Generate
 
 
+@pytest.mark.ui
 @allure.title("Отмена создания новой категории и подкатегории в панели управления")
 async def test_admin_cancels_creation_of_category_and_subcategory(
     photo_upload_page,

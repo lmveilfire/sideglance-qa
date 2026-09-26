@@ -1,9 +1,11 @@
 import allure
+import pytest
 from playwright.async_api import expect
 
 from src.helpers.helpers import create_photo_with_category
 
 
+@pytest.mark.ui
 @allure.title("Отображение метаданных и счетчиков просмотров/лайков на странице фотографии")
 async def test_photo_page_displays_metadata_and_counters(
     gallery_page,

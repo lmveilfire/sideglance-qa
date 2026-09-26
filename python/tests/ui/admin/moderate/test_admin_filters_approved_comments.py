@@ -1,4 +1,5 @@
 import allure
+import pytest
 from playwright.async_api import expect
 
 from src.helpers.helpers import create_photo_with_category
@@ -6,6 +7,7 @@ from src.utils.generators import Generate
 from src.utils.models import CommentDto
 
 
+@pytest.mark.ui
 @allure.title(
     "Фильтр 'Одобренные' отображает только одобренные комментарии, которые затем видны в галерее"
 )

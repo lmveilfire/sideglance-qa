@@ -1,10 +1,12 @@
 import allure
+import pytest
 from playwright.async_api import expect
 
 from src.helpers.helpers import create_photo_with_category
 from src.utils.generators import Generate
 
 
+@pytest.mark.ui
 @allure.title("Удаление комментария администратором в панели модерации")
 async def test_admin_deletes_comment(
     moderate_comments_page,

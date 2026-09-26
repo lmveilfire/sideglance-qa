@@ -14,11 +14,13 @@ class AuthApi:
     def _headers(self, custom: dict[str, str] | None = None) -> dict[str, str]:
         return merge_headers(custom)
 
-    def login(self, payload: LoginPayload) -> requests.Response:
+    def login(
+        self, payload: LoginPayload, custom_headers: dict[str, str] | None = None
+    ) -> requests.Response:
         return self._session.post(
             f"{API_URL}/api/auth/login",
             json=payload.model_dump(),
-            headers=self._headers(),
+            headers=self._headers(custom_headers),
             timeout=10,
         )
 

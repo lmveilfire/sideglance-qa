@@ -1,9 +1,11 @@
 > API-тесты для галереи [sideglance.ru](https://sideglance.ru)
 
-[![CI Tests](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-pytest.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-pytest.yml)
+[![CI Tests](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-api-tests.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-api-tests.yml)
+[![CI Tests](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-ui-tests.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-ui-tests.yml)
 [![Python](https://img.shields.io/badge/Python-3.10-blue)](https://www.python.org)
 [![Pytest](https://img.shields.io/badge/Pytest-blue)](https://docs.pytest.org/)
-[![Pydantic v2](https://shields.io)](https://pydantic.dev)
+[![Playwright](https://img.shields.io/badge/playwright-green)](https://playwright.dev)
+[![Pydantic v2](https://img.shields.io/badge/pydantic-purple)](https://pydantic.dev)
 [![mypy](https://img.shields.io/badge/mypy-strict-brightgreen)](https://mypy-lang.org)
 
 ### Стек технологий:
@@ -26,18 +28,26 @@ python-pytest/
 │   ├── api                     # Слой транспорта: чистые HTTP-обёртки поверх requests, без единой проверки статуса внутри
 │   ├── clients                 # Слой клиентов
 │   ├── helpers                 # `AuthHelper`, `CaptchaHelper` — сквозные сценарии поверх api
+│   ├── pages                   # UI Слой: Page Object классы для Playwright (локаторы)
 │   └── utils
 │       ├── constants.py        # HTTP-коды, лимиты
 │       ├── generators.py       # Faker-генераторы тестовых данных
 │       ├── headers.py          # Утилита `mergeHeaders` для кастомного хелпера авторизации
 │       └── models.py           # Pydantic-модели
 ├── tests
-│   └── api                     # API-тесты: контракты, негативные сценарии, rate-limit
-│       ├── auth                # Авторизация: сессии, JWT-токены, валидация payload и блокировки
-│       ├── categories          # Категории: создание, удаление и контроль структуры контрактов
-│       ├── comments            # Комментарии: модерация, защита от спама (honeypot, слишком быстрые ответы) и rate-limit
-│       ├── photos              # Фотографии: загрузка медиафайлов, инкремент лайков
-|       └── subcategories       # Подкатегории: полный жизненный цикл и контрактные связи с родительскими категориями
+│   ├── api                     # API-тесты: контракты, негативные сценарии, rate-limit
+│   │   ├── auth                # Авторизация: сессии, JWT-токены, валидация payload и блокировки
+│   │   ├── categories          # Категории: создание, удаление и контроль структуры контрактов
+│   │   ├── comments            # Комментарии: модерация, защита от спама (honeypot, слишком быстрые ответы) и rate-limit
+│   │   ├── photos              # Фотографии: загрузка медиафайлов, инкремент лайков
+|   │   └── subcategories       # Подкатегории: полный жизненный цикл и контрактные связи с родительскими категориями 
+│   └── ui                      # UI/E2E-тесты: сквозные сценарии на Playwright
+│        ├── admin              # Панель управления: закрытая часть для администратора
+│        │   ├── auth          # Авторизация админа: успешный логин, редиректы, невалидные пароли
+│        │   ├── moderate      # Модерация: одобрение, отклонение и фильтрация комментариев
+│        │   └── upload        # Загрузка контента: добавление фото, валидация полей ввода
+│        ├── users              # Публичная часть: действия обычных пользователей (просмотр, карусель, лайки)
+│        └── conftest.py        # Фикстуры для UI: запуск браузера, контексты Playwright, сессии страниц   
 ├── conftest.py                 # Граф фикстур pytest + AllureAPISession
 ├── pytest.ini                  # Маркеры, `--strict-markers`, опции запуска
 ├── pyproject.toml              # Конфигурация mypy (`strict`) и ruff в одном месте
@@ -68,9 +78,15 @@ flowchart TD
 
 Высокоуровневые клиенты автоматически валидируют входящие JSON-структуры и массивы (`TypeAdapter`) в момент их получения. Работа с ответами API в тесах происходит через свойства объектов (`photo.id`, `page.totalCount`), а не через строковые ключи словарей.
 
-### Изоляция транспортного уровня:**
+### Изоляция транспортного уровня:
 
 Слой `api` отвечает исключительно за отправку HTTP-запросов и возвращает «сырой» `requests.Response`. Используется напрямую в негативных тест-кейсах, где необходимо умышленно ломать заголовки/капчи и проверять коды ошибок. Слой `сlient` инкапсулирует позитивную логику. Он доверяет контракту бэкенда, отсекает ошибочные статус-коды и возвращает в тесты готовые, строго типизированные DTO-объекты.
+
+
+### UI Автоматизация на Playwright (Page Object Model):
+
+Слой страниц в `src/pages/` инкапсулирует в себе всю работу с DOM-деревом React-приложения. Локаторы жестко привязаны к семантическим селекторам (`get_by_test_id`), что в связке с тестовой сборкой фронтенда (`build:test`) гарантирует стабильность тестов. Для изоляции окружения в CI/CD настроен отдельный независимый пайплайн `python-ui-tests.yml`.
+
 
 ### Сетевая изоляция и стабильность Rate-Limit
 Бэкенд приложения (Spring Boot) реализует строгий контроль частоты запросов (`checkRateLimit`) по IP-адресу пользователя (`X-Forwarded-For`). Для исключения эффекта  flaky тестов и взаимной блокировки при общем или параллельном прогоне, во фреймворк внедрен механизм сетевой изоляции: на каждый изолированный запрос через генератор `Generate.ip()` подмешивается уникальный эмулируемый IP-адрес, полностью снимая инфраструктурную нагрузку со стенда.
@@ -102,12 +118,7 @@ flowchart TD
 
 
 ### Осознанные ограничения:
-**Тест на рейт-лимит логина изолирован от общего прогона** 
-
-
-Обнаружено реальным прогоном в CI: бэкенд после серии неудачных попыток логина блокирует IP на срок, превышающий длительность всего остального тестового набора. Тест исключен из общего прогона в CI с помощью маркера `@pytest.mark.skip`.
 
 **Параллельный запуск (pytest-xdist) в CI пока не используется**
-
 
 При текущем размере набора тестов последовательный прогон не создаёт заметных издержек по времени.
