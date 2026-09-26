@@ -1,0 +1,64 @@
+import allure
+from playwright.async_api import expect
+
+from src.helpers.helpers import create_photo_with_category
+from src.utils.generators import Generate
+from src.utils.models import CommentDto
+
+
+@allure.title(
+    "Фильтр 'Одобренные' отображает только одобренные комментарии, которые затем видны в галерее"
+)
+async def test_admin_filters_approved_comments(
+    moderate_comments_page,
+    gallery_page,
+    photo_page,
+    category_client,
+    photo_client,
+    captcha_helper,
+    comment_client,
+    ui_auth_helper,
+) -> None:
+
+    photo, category = create_photo_with_category(category_client, photo_client)
+    created_comments: list[CommentDto] = []
+
+    for _ in range(3):
+        captcha = captcha_helper.solve_captcha()
+        comment = comment_client.create_in_isolation(Generate.comment_data(photo.id), captcha)
+        created_comments.append(comment)
+
+    comment_to_approve = created_comments[0]
+    comment_to_reject = created_comments[1]
+    comment_to_keep_pending = created_comments[2]
+
+    await ui_auth_helper.login_as_admin()
+    await moderate_comments_page.goto()
+    await moderate_comments_page.filter_pending()
+
+    await moderate_comments_page.wait_for_comment_is_visible(comment_to_approve.id)
+    await moderate_comments_page.approve_comment(comment_to_approve.id)
+
+    await moderate_comments_page.wait_for_comment_is_visible(comment_to_reject.id)
+    await moderate_comments_page.reject_comment(comment_to_reject.id)
+
+    await moderate_comments_page.filter_approved()
+
+    await expect(moderate_comments_page.comment_item(comment_to_approve.id)).to_be_visible()
+    await expect(moderate_comments_page.comment_item(comment_to_reject.id)).not_to_be_visible()
+    await expect(
+        moderate_comments_page.comment_item(comment_to_keep_pending.id)
+    ).not_to_be_visible()
+
+    await moderate_comments_page.home_btn.click()
+
+    await expect(gallery_page.category_item_by_name(category.name)).to_be_visible()
+
+    await gallery_page.select_category_by_name(category.name)
+    await gallery_page.open_photo_by_alt(photo.title)
+    await photo_page.scroll_to_bottom()
+    await photo_page.wait_for_comment_is_visible(comment_to_approve.id)
+
+    await expect(photo_page.comment_item(comment_to_approve.id)).to_be_visible()
+    await expect(photo_page.comment_item(comment_to_reject.id)).not_to_be_visible()
+    await expect(photo_page.comment_item(comment_to_keep_pending.id)).not_to_be_visible()
