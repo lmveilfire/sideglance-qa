@@ -13,7 +13,6 @@ from src.utils.models import CommentDto
 )
 async def test_admin_filters_approved_comments(
     moderate_comments_page,
-    gallery_page,
     photo_page,
     category_client,
     photo_client,
@@ -22,7 +21,7 @@ async def test_admin_filters_approved_comments(
     ui_auth_helper,
 ) -> None:
 
-    photo, category = create_photo_with_category(category_client, photo_client)
+    photo, _ = create_photo_with_category(category_client, photo_client)
     created_comments: list[CommentDto] = []
 
     for _ in range(3):
@@ -52,12 +51,7 @@ async def test_admin_filters_approved_comments(
         moderate_comments_page.comment_item(comment_to_keep_pending.id)
     ).not_to_be_visible()
 
-    await moderate_comments_page.home_btn.click()
-
-    await expect(gallery_page.category_item_by_name(category.name)).to_be_visible()
-
-    await gallery_page.select_category_by_name(category.name)
-    await gallery_page.open_photo_by_alt(photo.title)
+    await photo_page.open(photo.id)
     await photo_page.scroll_to_bottom()
     await photo_page.wait_for_comment_is_visible(comment_to_approve.id)
 
