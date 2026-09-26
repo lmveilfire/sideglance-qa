@@ -1,9 +1,11 @@
 import allure
+import pytest
 from playwright.async_api import expect
 
 from src.helpers.helpers import create_photo_with_category
 
 
+@pytest.mark.ui
 @allure.title("Удаление фотографии внутри категории")
 async def test_admin_deletes_photo_from_gallery(
     gallery_page, ui_auth_helper, photo_upload_page, photo_client, category_client

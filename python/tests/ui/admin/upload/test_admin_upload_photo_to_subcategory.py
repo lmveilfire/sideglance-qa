@@ -1,10 +1,12 @@
 import allure
+import pytest
 from playwright.async_api import expect
 
 from src.utils.constants import DEFAULT_FILE_PATH
 from src.utils.generators import Generate
 
 
+@pytest.mark.ui
 @allure.title("Загрузка новой фотографии в подкатегорию с верификацией отображения в галерее")
 async def test_admin_upload_photo_to_subcategory(
     photo_upload_page, ui_auth_helper, gallery_page

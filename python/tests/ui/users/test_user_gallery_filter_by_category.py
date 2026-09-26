@@ -1,9 +1,11 @@
 import allure
+import pytest
 from playwright.async_api import expect
 
 from src.helpers.helpers import create_photo_with_category
 
 
+@pytest.mark.ui
 @allure.title("Фильтрация фотографий по категориям в публичной галерее")
 async def test_user_gallery_filter_by_category(
     gallery_page,

@@ -1,10 +1,12 @@
 import allure
+import pytest
 from playwright.async_api import expect
 
 from src.helpers.helpers import create_photo_with_category
 from src.utils.models import CategoryDto, PhotoDto
 
 
+@pytest.mark.ui
 @allure.title("Поиск фотографий по текстовому запросу и очистка результатов поиска")
 async def test_user_gallery_search_and_clear(
     gallery_page,

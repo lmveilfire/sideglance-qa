@@ -1,10 +1,12 @@
 import allure
+import pytest
 from playwright.async_api import expect
 
 from src.helpers.helpers import create_photo_list
 from src.utils.generators import Generate
 
 
+@pytest.mark.ui
 @allure.title("Навигация между фотографиями в карусели на странице просмотра")
 async def test_photo_page_carousel_navigation(
     gallery_page,

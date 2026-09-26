@@ -1,9 +1,11 @@
 import allure
+import pytest
 from playwright.async_api import Page, expect
 
 from src.utils.constants import ADMIN_USERNAME
 
 
+@pytest.mark.ui
 @allure.title("Ошибка авторизации при вводе неверного пароля с отображением сообщения об ошибке")
 async def test_login_fails_with_invalid_password(page: Page, login_page) -> None:
     invalid_password = "wrong_password"

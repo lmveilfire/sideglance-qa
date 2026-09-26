@@ -1,9 +1,11 @@
 import allure
+import pytest
 from playwright.async_api import expect
 
 from src.helpers.helpers import create_photo_with_category
 
 
+@pytest.mark.ui
 @allure.title("Просмотр фотографии во весь экран в режиме лайтбокса")
 async def test_photo_page_lightbox(
     gallery_page,

@@ -1,12 +1,17 @@
-# Multi-Stack QA Automation Portfolio
-Демонстрационный репозиторий с тестовыми фреймворками на разных стеках (TypeScript, Python; Java в разработке) для сквозного тестирования (API/E2E) изолированного full-stack приложения: веб-галерея авторских пейзажных фотографий с ролевой моделью пользователей и админкой модерации комментариев.
+# Multi-Stack QA Automation Demo
+Демонстрационный репозиторий с тестовыми фреймворками на разных стеках (TypeScript, Python) для сквозного тестирования (API/E2E) изолированного full-stack приложения.
+**О тестируемом приложении:**
+Веб-галерея авторских пейзажных фотографий (Java Spring Boot + React), реализующая две ролевые модели:
+*   **Публичная зона (Гости):** Доступна интерактивная карусель для просмотра контента, счетчики лайков и возможность оставить комментарий к фотографии, защищенный капчей и скрытой ловушкой для ботов.
+*   **Административная панель (Учетная запись):** Закрытая зона управления контентом с ролевым доступом. Включает в себя функционал создания/удаления категорий и подкатегорий, прямую загрузку медиафайлов на сервер, а также интерфейс модерации входящих комментариев (утверждение или отклонение с указанием причины).
 
 Безопасность и NDA: Исходный код самого тестируемого приложения и базы данных закрытый и в этом репозитории отсутствует. Здесь только код тестовых фреймворков и конфигурация CI/CD.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 [![CI Tests Typescript](https://github.com/lmveilfire/sideglance-qa/actions/workflows/playwright.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions/workflows/playwright.yml)
-[![CI Tests Python](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-pytest.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-pytest.yml)
+[![CI API Tests Python ](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-ui-tests.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-ui-tests.yml)
+[![CI UI Tests Python ](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-api-tests.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-api-tests.yml)
 
 ### Архитектура запуска и CI/CD
 У каждого стека свой собственный workflow-файл в .github/workflows/, со своим набором инструментов сборки. Но общая канва одна и та же:
@@ -23,8 +28,11 @@
 ### Структура тестовых фреймворков
 Тестирование одной и той же бизнес-логики приложения (авторизация, модерация, комментарии) реализовано независимо в изолированных папках с разным набором технических решений в каждой:
 
-- /typescript-playwright — E2E и API-тесты на `TypeScript` + `Playwright`. Линтинг (`ESLint`), форматирование (`Prettier`), генерация данных (`@faker-js/faker`).
-- /python-pytest — API-тесты на `Python` + `pytest` со строгой типизацией через `mypy --strict` (в `Python`, в отличие от `TypeScript`, это не встроенная возможность языка, а отдельно настроенный и поддерживаемый процесс).
+*   **`/typescript-playwright`** — E2E и API-тесты на `TypeScript` + `Playwright`. Линтинг (`ESLint`), форматирование (`Prettier`), генерация данных (`@faker-js/faker`).
+*   **`/python`** — API и UI/E2E тесты на стеке `Python` + `pytest` + `Playwright`. Архитектура построена на принципах **Type-Driven Development**:
+    *   **Валидация контрактов:** На замену декларативным матчерам внедрена строгая рантайм-проверка схем через модели `Pydantic v2`.
+    *   **Раздельный статический анализ:** В `pyproject.toml` настроена строгая проверка типов через Mypy только для папки `src.*` (включен запрет на функции без аннотаций, нетипизированные вызовы, строгие дженерики и т.д.). 
+    *   **Инфраструктурная изоляция:** Реализован обход IP Rate-Limit бэкенда через динамическую подмену заголовков `X-Forwarded-For`, что гарантирует стабильность тестов в CI/CD без ложных падений. Зависимости разделены на runtime, API и UI блоки для ускорения сборок.
 
 ### Безопасность
 * Все секреты хранятся в GitHub Secrets.

@@ -1,9 +1,11 @@
 import allure
+import pytest
 from playwright.async_api import expect
 
 from src.utils.generators import Generate
 
 
+@pytest.mark.ui
 @allure.title("Создание категории и подкатегории в панели управления")
 async def test_admin_creates_category_and_subcategory(
     photo_upload_page, gallery_page, ui_auth_helper
