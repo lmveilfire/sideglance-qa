@@ -38,6 +38,14 @@ class PhotoPage(BasePage):
     @property
     def photo_meta(self) -> Locator:
         return self.page.get_by_test_id("photo-meta")
+    
+    @property
+    def carousel_counter(self) -> Locator:
+        return self.page.get_by_test_id("carousel-counter")
+
+    @property
+    def carousel_counter_current(self) -> Locator:
+        return self.page.get_by_test_id("carousel-counter-current")
 
     @property
     def photo_title(self) -> Locator:

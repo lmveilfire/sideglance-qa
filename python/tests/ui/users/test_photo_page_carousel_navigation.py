@@ -19,15 +19,15 @@ async def test_photo_page_carousel_navigation(
     category = category_client.create(f"{Generate.category_data().name}-cat")
     photo_list = create_photo_list(category.id, photo_client, count)
 
-    await gallery_page.goto()
-    await gallery_page.select_category_by_name(category.name)
-    await gallery_page.open_photo_by_alt(photo_list[1].title)
+    await photo_page.open(photo_list[1].id)
+
+    await expect(photo_page.carousel_counter_current).to_have_text("1")
 
     await expect(photo_page.photo_by_alt(photo_list[1].title)).to_be_visible()
     await expect(photo_page.carousel_prev_btn).to_be_disabled()
 
     await photo_page.go_next()
-
+    await expect(photo_page.carousel_counter_current).to_have_text("2")
     await expect(photo_page.photo_by_alt(photo_list[0].title)).to_be_visible()
     await expect(photo_page.carousel_next_btn).to_be_disabled()
 
