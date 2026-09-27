@@ -7,7 +7,6 @@ from src.utils.models import LoginPayload
 
 
 @pytest.mark.api
-@pytest.mark.security
 @allure.title("Блокировка API-авторизации (Rate Limit) после 5 неудачных попыток")
 def test_api_login_rate_limit(auth_api) -> None:
     bad_credentials = LoginPayload(username=ADMIN_USERNAME, password="wrong_password")
