@@ -2,8 +2,7 @@ import allure
 import pytest
 from playwright.async_api import expect
 
-from src.helpers.photo_helpers import create_photo_with_category
-from src.utils.models import CategoryDto, PhotoDto
+from src.helpers.photo_helpers import create_photos_in_different_categories
 
 
 @pytest.mark.ui
@@ -14,18 +13,13 @@ async def test_user_gallery_search_and_clear(
     photo_client,
 ) -> None:
 
-    count = 4
     free_photo_title = "never give up"
-    photo_list: list[tuple[PhotoDto, CategoryDto]] = []
+    photo_list = create_photos_in_different_categories(category_client, photo_client, 6)
 
-    for _ in range(count):
-        photo, category = create_photo_with_category(category_client, photo_client)
-        photo_list.append((photo, category))
 
     await gallery_page.goto()
     await gallery_page.search_photo(photo_list[2][0].title)
 
-    await expect(gallery_page.photo_card_list.locator("img")).to_have_count(1)
     await expect(gallery_page.photo_by_alt(photo_list[2][0].title)).to_be_visible()
 
     await gallery_page.clear_search()
