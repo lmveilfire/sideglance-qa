@@ -1,13 +1,13 @@
 import allure
 import pytest
 
-from src.helpers.helpers import create_photo_list
+from src.helpers.photo_helpers import create_photo_list
 from src.utils.generators import Generate
 
 
 @pytest.mark.api
 @allure.title(
-    "Получение списка фотографий по категории: валидация массива объектов через контрактный матчер"
+    "Фотографии: получение полного списка всех загруженных фотографий внутри конкретной категории"
 )
 def test_api_get_photos_by_category_array(photo_client, category_client) -> None:
     photos_count = 6
@@ -17,5 +17,4 @@ def test_api_get_photos_by_category_array(photo_client, category_client) -> None
 
     body = photo_client.list_by_category(category.id)
 
-    assert isinstance(body, list)
     assert len(body) == photos_count

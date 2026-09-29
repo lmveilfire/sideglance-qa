@@ -8,7 +8,7 @@ from src.utils.generators import Generate
 
 
 @pytest.mark.api
-@allure.title("Запрет загрузки фотографии (403 Forbidden) при запросе без токена авторизации")
+@allure.title("Фотографии: запрет загрузки новой фотографии на сервер без авторизационного токена")
 def test_api_upload_photo_without_token(api_session: requests.Session, category_client) -> None:
     category = category_client.create(Generate.category_data().name)
 

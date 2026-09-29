@@ -2,9 +2,8 @@ import allure
 import pytest
 from playwright.async_api import expect
 
-from src.helpers.helpers import create_photo_with_category
-from src.utils.generators import Generate
-from src.utils.models import CommentDto
+from src.helpers.comment_helper import create_comment_list
+from src.helpers.photo_helpers import create_photo_with_category
 
 
 @pytest.mark.ui
@@ -22,16 +21,10 @@ async def test_admin_filters_approved_comments(
 ) -> None:
 
     photo, _ = create_photo_with_category(category_client, photo_client)
-    created_comments: list[CommentDto] = []
 
-    for _ in range(3):
-        captcha = captcha_helper.solve_captcha()
-        comment = comment_client.create_in_isolation(Generate.comment_data(photo.id), captcha)
-        created_comments.append(comment)
-
-    comment_to_approve = created_comments[0]
-    comment_to_reject = created_comments[1]
-    comment_to_keep_pending = created_comments[2]
+    comment_to_approve, comment_to_reject, comment_to_keep_pending = create_comment_list(
+        photo.id, comment_client, captcha_helper
+    )
 
     await ui_auth_helper.login_as_admin()
     await moderate_comments_page.goto()

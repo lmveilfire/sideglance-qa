@@ -2,7 +2,7 @@ import allure
 import pytest
 from playwright.async_api import expect
 
-from src.helpers.helpers import create_photo_list
+from src.helpers.photo_helpers import create_photo_list
 from src.utils.generators import Generate
 
 
@@ -15,7 +15,7 @@ async def test_home_page_displays_all_uploaded_photos(
 ) -> None:
 
     count = 6
-    category = category_client.create(f"{Generate.category_data().name}-cat")
+    category = category_client.create(Generate.category_data().name)
     photo_list = create_photo_list(category.id, photo_client, count)
 
     await gallery_page.goto()

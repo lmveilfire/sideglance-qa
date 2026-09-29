@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import random
-from datetime import date
+from datetime import date, datetime, timedelta
 from pathlib import Path
 from typing import Any, cast
 
@@ -48,3 +48,7 @@ class Generate:
     @staticmethod
     def fixture_path(filename: str = "test-image.jpg") -> str:
         return str(_FIXTURES_IMAGES_DIR / filename)
+
+    @staticmethod
+    def iso_date_offset(days: int = 0) -> str:
+        return (datetime.now() + timedelta(days=days)).isoformat()

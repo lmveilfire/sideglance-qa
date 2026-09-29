@@ -2,7 +2,7 @@ import allure
 import pytest
 from playwright.async_api import expect
 
-from src.helpers.helpers import create_photo_with_category
+from src.helpers.photo_helpers import create_photo_with_category
 from src.utils.models import CategoryDto, PhotoDto
 
 

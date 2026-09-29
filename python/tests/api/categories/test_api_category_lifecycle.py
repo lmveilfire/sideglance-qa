@@ -5,7 +5,7 @@ from src.utils.generators import Generate
 
 
 @pytest.mark.api
-@allure.title("Полный жизненный цикл категории: создание, валидация матчером и удаление")
+@allure.title("Категория: создание, отображение в списке и удаление")
 def test_api_category_create_and_delete_lifecycle(category_client) -> None:
     category = category_client.create(Generate.category_data().name)
 

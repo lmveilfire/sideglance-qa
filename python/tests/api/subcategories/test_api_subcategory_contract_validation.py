@@ -5,8 +5,8 @@ from src.utils.generators import Generate
 
 
 @pytest.mark.api
-@allure.title("Валидация схемы ответа подкатегории через контрактный матчер")
-def test_api_subcategory_contract_shape(category_client, subcategory_client) -> None:
+@allure.title("Подкатегории: валидация схемы ответа и привязки к родительской категории")
+def test_api_subcategory_contract_validation(category_client, subcategory_client) -> None:
     category = category_client.create(Generate.category_data().name)
     subcategory_client.create(category.id, Generate.category_data().name)
 

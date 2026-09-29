@@ -1,13 +1,13 @@
 import allure
 import pytest
 
-from src.helpers.helpers import create_photo_with_category
+from src.helpers.photo_helpers import create_photo_with_category
 from src.utils.constants import DEFAULT_COMMENT_PAGE_SIZE, DEFAULT_START_PAGE
 from src.utils.models import CommentsPageResponse
 
 
 @pytest.mark.api
-@allure.title("Получение списка комментариев к фото: проверка структуры пагинации бэкенда")
+@allure.title("Комментарии: возвращение пустой страницы пагинации для фотографии без комментариев")
 def test_api_get_comments_pagination(photo_client, comment_client, category_client) -> None:
     photo, _ = create_photo_with_category(category_client, photo_client)
     page: CommentsPageResponse = comment_client.list_by_photo(
@@ -15,4 +15,4 @@ def test_api_get_comments_pagination(photo_client, comment_client, category_clie
     )
 
     assert len(page.comments) == 0
-    assert page.page == 0
+    assert page.page == DEFAULT_START_PAGE
