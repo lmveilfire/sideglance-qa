@@ -30,3 +30,6 @@ def create_photo_list(
         photo_list.append(photo)
 
     return photo_list
+
+def create_photos_in_different_categories(category_client, photo_client, count=4):
+    return [create_photo_with_category(category_client, photo_client) for _ in range(count)]
