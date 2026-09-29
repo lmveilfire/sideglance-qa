@@ -6,7 +6,7 @@ from src.utils.models import AuthResponse, LoginPayload
 
 
 @pytest.mark.api
-@allure.title("Успешное обновление пары JWT-токенов через API")
+@allure.title("Авторизация: Успешное обновление пары JWT-токенов")
 def test_api_refresh_token_success(auth_api) -> None:
     jwt_segments_count = 3
     login_response = auth_api.login(LoginPayload(username=ADMIN_USERNAME, password=ADMIN_PASSWORD))

@@ -6,7 +6,7 @@ from src.utils.generators import Generate
 
 
 @pytest.mark.ui
-@allure.title("Удаление пустой категории")
+@allure.title("Успешное удаление пустой категории")
 async def test_admin_deletes_empty_category(
     gallery_page,
     ui_auth_helper,

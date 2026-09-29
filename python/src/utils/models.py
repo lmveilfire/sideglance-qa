@@ -69,6 +69,7 @@ class CommentDto(ApiModel):
     id: int
     author: str
     text: str
+    status: str | None = None
     createdAt: str
     photoId: int
 

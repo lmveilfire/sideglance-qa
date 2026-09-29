@@ -6,12 +6,12 @@ from src.utils.models import CategoryDto
 
 
 @pytest.mark.api
-@allure.title("Получение списка категорий с верификацией всех созданных элементов")
+@allure.title("Категории: Получение полного списка всех созданных категорий")
 def test_api_category_list_contains_all_created(category_client) -> None:
     created: list[CategoryDto] = []
-    count = 5
+    category_сount = 5
 
-    for _ in range(count):
+    for _ in range(category_сount):
         category = category_client.create(Generate.category_data().name)
         created.append(category)
 

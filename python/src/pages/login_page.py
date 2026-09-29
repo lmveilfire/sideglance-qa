@@ -40,9 +40,5 @@ class LoginPage(BasePage):
         await self.password_input.fill(password)
         await self.auth_form_submit_btn.click()
         if await self.auth_form_submit_btn.is_visible():
-            # try:
-            #     await self.submit_btn.wait_for(state=STATE_DETACHED, timeout=TIMEOUT_5S)
-            # except TimeoutError:
-            #     pass
             with contextlib.suppress(TimeoutError):
                 await self.auth_form_submit_btn.wait_for(state=STATE_DETACHED, timeout=TIMEOUT_5S)

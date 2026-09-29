@@ -1,11 +1,11 @@
 import allure
 import pytest
 
-from src.helpers.helpers import create_photo_with_category
+from src.helpers.photo_helpers import create_photo_with_category
 
 
 @pytest.mark.api
-@allure.title("Получение фотографии по существующему ID: полная проверка структуры полей")
+@allure.title("Фотографии: успешное получение данных фотографии по ее существующему идентификатору")
 def test_api_get_photo_by_id_success(photo_client, category_client) -> None:
     photo, _ = create_photo_with_category(category_client, photo_client)
 

@@ -2,12 +2,12 @@ import allure
 import pytest
 from playwright.async_api import expect
 
-from src.helpers.helpers import create_photo_with_category
+from src.helpers.photo_helpers import create_photo_with_category
 from src.utils.generators import Generate
 
 
 @pytest.mark.ui
-@allure.title("Удаление комментария администратором в панели модерации")
+@allure.title("Успешное удаление комментария администратором в панели модерации")
 async def test_admin_deletes_comment(
     moderate_comments_page,
     category_client,
@@ -27,4 +27,4 @@ async def test_admin_deletes_comment(
     await moderate_comments_page.wait_for_comment_is_visible(created.id)
     await moderate_comments_page.delete_comment(created.id)
 
-    await expect(moderate_comments_page.comment_by_text(created.id)).not_to_be_visible()
+    await expect(moderate_comments_page.comment_by_text(created.text)).not_to_be_visible()

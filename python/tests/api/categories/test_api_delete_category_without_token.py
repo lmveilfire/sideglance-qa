@@ -8,7 +8,7 @@ from src.utils.generators import Generate
 
 
 @pytest.mark.api
-@allure.title("Запрет удаления категории (403 Forbidden) при запросе без токена авторизации")
+@allure.title("Категории: Запрет удаления категории без авторизационного токена")
 def test_api_delete_category_without_token(api_session: requests.Session, category_api) -> None:
     create_response = category_api.create(Generate.category_data().name)
     assert create_response.status_code in (HTTP.OK, HTTP.CREATED)

@@ -1,14 +1,14 @@
 import allure
 import pytest
 
-from src.helpers.helpers import create_photo_with_category
+from src.helpers.photo_helpers import create_photo_with_category
 from src.utils.constants import DEFAULT_START_PAGE, MAX_COMMENT_PAGE_SIZE
 from src.utils.generators import Generate
 from src.utils.models import CommentStatus
 
 
 @pytest.mark.api
-@allure.title("Полный цикл отклонения комментария: модерация REJECTED с указанием причины")
+@allure.title("Комментарии: отклонение комментария модератором скрывает его из публичного доступа")
 def test_api_comment_lifecycle_rejected(
     photo_client,
     comment_client,
@@ -30,5 +30,3 @@ def test_api_comment_lifecycle_rejected(
     assert not any(c.id == created.id for c in page.comments), (
         "REJECTED комментарий не должен быть виден публично"
     )
-
-    admin_comment_client.delete(created.id)

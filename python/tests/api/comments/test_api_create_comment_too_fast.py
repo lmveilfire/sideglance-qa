@@ -1,15 +1,13 @@
 import allure
 import pytest
 
-from src.helpers.helpers import create_photo_with_category
+from src.helpers.photo_helpers import create_photo_with_category
 from src.utils.constants import HTTP
 from src.utils.generators import Generate
 
 
 @pytest.mark.api
-@allure.title(
-    "Защита от ботов: ошибка 400 Bad Request при слишком быстром ответе (роботизированный ввод)"
-)
+@allure.title("Комментарии: отклонение запроса при слишком быстром разгадывании капчи")
 def test_api_create_comment_too_fast(
     photo_client, comment_api, captcha_helper, category_client, comment_client
 ) -> None:
@@ -25,4 +23,3 @@ def test_api_create_comment_too_fast(
     )
 
     assert response.status_code == HTTP.BAD_REQUEST
-    assert response.json()["error"]

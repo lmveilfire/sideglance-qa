@@ -1,14 +1,14 @@
 import allure
 import pytest
 
-from src.helpers.helpers import create_photo_with_category
+from src.helpers.photo_helpers import create_photo_with_category
 from src.utils.constants import DEFAULT_START_PAGE, HTTP, MAX_COMMENT_PAGE_SIZE
 from src.utils.generators import Generate
 
 
 @pytest.mark.api
 @allure.title(
-    "Ловушка для спамеров: скрытое отклонение (200 OK без сохранения в базу) при заполнении поля honeypot"
+    "комментарии: скрытое игнорирование создания комментария при заполнении скрытого поля спам-бота"
 )
 def test_api_create_comment_honeypot_trap(
     photo_client, comment_api, comment_client, captcha_helper, category_client

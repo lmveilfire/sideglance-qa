@@ -8,12 +8,11 @@ from src.utils.models import CommentStatus
 
 
 @pytest.mark.api
-@allure.title("Комментарии: одобрение комментария делает его видимым публично")
-def test_api_comment_lifecycle_approved(
+@allure.title("Комментарии: новый комментарий создается в статусе ожидания и скрыт публично")
+def test_api_comment_pending_isolation(
     photo_client,
     comment_client,
     captcha_helper,
-    admin_comment_client,
     category_client,
 ) -> None:
     photo, _ = create_photo_with_category(category_client, photo_client)
@@ -21,11 +20,9 @@ def test_api_comment_lifecycle_approved(
     captcha = captcha_helper.solve_captcha()
     created = comment_client.create_in_isolation(Generate.comment_data(photo.id), captcha)
 
-    moderated = admin_comment_client.moderate(created.id, CommentStatus.APPROVED)
-    assert moderated.status == CommentStatus.APPROVED
+    assert created.status == CommentStatus.PENDING
 
     page = comment_client.list_by_photo(photo.id, DEFAULT_START_PAGE, MAX_COMMENT_PAGE_SIZE)
-
-    assert any(c.id == created.id for c in page.comments), (
-        "APPROVED комментарий должен быть виден публично"
+    assert not any(c.id == created.id for c in page.comments), (
+        "PENDING комментарий не должен быть виден публично"
     )

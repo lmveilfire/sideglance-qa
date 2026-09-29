@@ -1,14 +1,14 @@
 import allure
 import pytest
 
-from src.helpers.helpers import create_photo_with_category
+from src.helpers.photo_helpers import create_photo_with_category
 from src.utils.constants import HTTP
 from src.utils.generators import Generate
 
 
 @pytest.mark.api
 @allure.title(
-    "Защита от Replay: повторное использование одного sessionId возвращает 400 Bad Request"
+    "Комментарии: отклонение повторного запроса с использованным идентификатором сессии капчи"
 )
 def test_api_create_comment_duplicate_session(
     photo_client, comment_api, captcha_helper, category_client
