@@ -21,11 +21,12 @@ def create_photo_list(
     category_id: int, photo_client: PhotoClient, count: int = 6
 ) -> list[PhotoDto]:
     file_extension = ".jpg"
+    date_param = 1
     photo_list: list[PhotoDto] = []
     for i in range(count):
         photo = photo_client.upload(
             Generate.fixture_path(f"{i + 1}{file_extension}"),
-            Generate.photo_data(categoryId=category_id),
+            Generate.photo_data(categoryId=category_id, takenAt=Generate.iso_date_offset(i + date_param)),
         )
         photo_list.append(photo)
 
