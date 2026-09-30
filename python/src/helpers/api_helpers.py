@@ -5,4 +5,7 @@ import requests
 
 def assert_status(response: requests.Response, context: str, *expected: int) -> None:
     if response.status_code not in expected:
-        raise RuntimeError(f"[{context}] failed: {response.status_code} {response.text}")
+        raise RuntimeError(
+            f"[{context}] ожидался статус {expected}, "
+            f"получен {response.status_code}: {response.text}"
+        )

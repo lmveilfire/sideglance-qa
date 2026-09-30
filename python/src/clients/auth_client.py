@@ -15,11 +15,11 @@ class AuthClient:
     @allure.step("API: Авторизация в системе (POST /auth/login)")
     def login(self, payload: LoginPayload) -> AuthResponse:
         response = self._api.login(payload)
-        assert_status(response, "AuthClient] login", HTTP.OK, HTTP.CREATED)
+        assert_status(response, "AuthClient.login", HTTP.OK, HTTP.CREATED)
         return AuthResponse.model_validate(response.json())
 
     @allure.step("API: Обновление сессии по Refresh Token")
     def refresh(self, refresh_token: str) -> AuthResponse:
         response = self._api.refresh(refresh_token)
-        assert_status(response, "AuthClient] refresh", HTTP.OK, HTTP.CREATED)
+        assert_status(response, "AuthClient.refresh", HTTP.OK, HTTP.CREATED)
         return AuthResponse.model_validate(response.json())

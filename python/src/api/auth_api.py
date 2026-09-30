@@ -2,7 +2,8 @@ from __future__ import annotations
 
 import requests
 
-from src.utils.constants import API_URL
+from src.helpers.api_helpers import assert_status
+from src.utils.constants import API_URL, HTTP
 from src.utils.headers import merge_headers
 from src.utils.models import AuthResponse, LoginPayload
 
@@ -34,8 +35,7 @@ class AuthApi:
 
     def get_token(self, username: str, password: str) -> str:
         response = self.login(LoginPayload(username=username, password=password))
-        if not response.ok:
-            raise RuntimeError(f"[AuthApi] login failed: {response.status_code} {response.text}")
+        assert_status(response, "AuthApi.get_token", HTTP.OK)
         body = AuthResponse.model_validate(response.json())
         return body.accessToken
 

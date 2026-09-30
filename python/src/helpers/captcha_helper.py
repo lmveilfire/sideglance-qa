@@ -42,17 +42,27 @@ class CaptchaHelper:
         return CaptchaData(sessionId=captcha.sessionId, answer=answer, answerTimeMs=answer_time_ms)
 
     def _solve(self, question: str) -> int:
-        q = question.lower().replace("?", "").replace("сколько будет ", "")
-        words = q.split(" ")
-        a = _NUMBERS.get(words[0] if words else "", 0)
-        op = words[1] if len(words) > 1 else None
-        b = _NUMBERS.get(words[-1] if words else "", 0)
+        q = question.lower().replace("?", "").replace("сколько будет ", "").strip()
+        words = q.split()
 
-        if op == "плюс":
-            return a + b
-        if op == "минус":
-            return a - b
-        if op == "умножить":
-            return a * b
+        if len(words) < 3:
+            raise ValueError(f'[CaptchaHelper] неожиданный формат вопроса: "{question}"')
 
-        raise ValueError(f'[CaptchaHelper] неизвестный оператор: "{op}" в вопросе: "{question}"')
+        a = _NUMBERS.get(words[0])
+        b = _NUMBERS.get(words[-1])
+        op = words[1]
+
+        if a is None or b is None:
+            raise ValueError(f'[CaptchaHelper] неизвестное число в вопросе: "{question}"')
+
+        match op:
+            case "плюс":
+                return a + b
+            case "минус":
+                return a - b
+            case "умножить":
+                return a * b
+            case _:
+                raise ValueError(
+                    f'[CaptchaHelper] неизвестный оператор: "{op}" в вопросе: "{question}"'
+                )

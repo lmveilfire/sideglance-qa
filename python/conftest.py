@@ -1,12 +1,10 @@
 from __future__ import annotations
 
-import contextlib
 import json
-import os
 from collections.abc import Generator
-from types import ModuleType
 from typing import Any
 
+import allure
 import pytest
 import requests
 from dotenv import load_dotenv
@@ -29,11 +27,30 @@ from src.clients.subcategory_client import SubcategoryClient
 from src.helpers.auth_helper import AuthHelper
 from src.helpers.captcha_helper import CaptchaHelper
 
-allure: ModuleType | None
-try:
-    import allure
-except ImportError:
-    allure = None
+
+def _format_for_allure(data: dict[str, Any] | None) -> str:
+    if not data:
+        return "<Нет данных>"
+
+    lines = []
+    for key, value in data.items():
+        if key == "body":
+            if isinstance(value, bytes):
+                try:
+                    value = value.decode("utf-8")
+                except UnicodeDecodeError:
+                    value = "<Бинарные данные>"
+
+            if isinstance(value, str):
+                try:
+                    parsed = json.loads(value)
+                    value = json.dumps(parsed, indent=2, ensure_ascii=False)
+                except json.JSONDecodeError:
+                    pass
+
+        lines.append(f"--- {key.upper()} ---\n{value}")
+
+    return "\n\n".join(lines)
 
 
 class AllureAPISession(requests.Session):
@@ -72,35 +89,26 @@ class AllureAPISession(requests.Session):
 
         return response
 
-
-def _format_for_allure(data: dict[str, Any] | None) -> str:
-    if not data:
-        return "<Нет данных>"
-
-    lines = []
-    for key, value in data.items():
-        if key == "body":
-            if isinstance(value, bytes):
-                try:
-                    value = value.decode("utf-8")
-                except UnicodeDecodeError:
-                    value = "<Бинарные данные>"
-
-            if isinstance(value, str):
-                try:
-                    parsed = json.loads(value)
-                    value = json.dumps(parsed, indent=2, ensure_ascii=False)
-                except json.JSONDecodeError:
-                    pass
-
-        lines.append(f"--- {key.upper()} ---\n{value}")
-
-    return "\n\n".join(lines)
+    def attach_last_exchange(self) -> None:
+        allure.attach(
+            _format_for_allure(self._last_request),
+            name="Последний API Request",
+            attachment_type=allure.attachment_type.TEXT,
+        )
+        allure.attach(
+            _format_for_allure(self._last_response),
+            name="Последний API Response",
+            attachment_type=allure.attachment_type.TEXT,
+        )
 
 
-@pytest.fixture(scope="session")
-def api_url() -> str:
-    return os.getenv("API_URL", "http://localhost:8080")
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_makereport(
+    item: pytest.Item, call: pytest.CallInfo[Any]
+) -> Generator[None, Any, None]:
+    outcome = yield
+    report = outcome.get_result()
+    setattr(item, f"rep_{report.when}", report)
 
 
 @pytest.fixture(scope="session")
@@ -109,11 +117,14 @@ def faker() -> Faker:
 
 
 @pytest.fixture
-def api_session() -> Generator[AllureAPISession, None, None]:
+def api_session(request: pytest.FixtureRequest) -> Generator[AllureAPISession, None, None]:
     session = AllureAPISession()
     session.headers.update({"Accept": "application/json"})
     try:
         yield session
+        rep = getattr(request.node, "rep_call", None)
+        if rep is not None and rep.failed:
+            session.attach_last_exchange()
     finally:
         session.close()
 
@@ -193,32 +204,3 @@ def comment_client(comment_api: CommentApi) -> CommentClient:
 @pytest.fixture
 def admin_comment_client(admin_comment_api: AdminCommentApi) -> AdminCommentClient:
     return AdminCommentClient(admin_comment_api)
-
-
-@pytest.hookimpl(tryfirst=True, hookwrapper=True)
-def pytest_runtest_makereport(
-    item: pytest.Function, call: pytest.CallInfo[Any]
-) -> Generator[None, Any, None]:
-    outcome = yield
-    report = outcome.get_result()
-
-    if report.when != "call" or not report.failed:
-        return
-    if "api" not in item.keywords:
-        return
-
-    api_session = item.funcargs.get("api_session")
-    if api_session is None or not isinstance(api_session, AllureAPISession) or allure is None:
-        return
-
-    with contextlib.suppress(Exception):
-        allure.attach(
-            _format_for_allure(api_session._last_request),
-            name="Последний API Request",
-            attachment_type=allure.attachment_type.TEXT,
-        )
-        allure.attach(
-            _format_for_allure(api_session._last_response),
-            name="Последний API Response",
-            attachment_type=allure.attachment_type.TEXT,
-        )

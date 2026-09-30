@@ -9,7 +9,7 @@ from src.utils.models import CommentStatus
 
 @pytest.mark.api
 @allure.title("Комментарии: успешное удаление одобренного комментария через панель администратора")
-def test_api_comment_lifecycle_approved(
+def test_api_delete_approved_comment(
     photo_client,
     comment_client,
     captcha_helper,

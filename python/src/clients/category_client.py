@@ -16,13 +16,13 @@ class CategoryClient:
     @allure.step("API: Создать новую категорию '{name}'")
     def create(self, name: str) -> CategoryDto:
         response = self._api.create(name)
-        assert_status(response, "CategoryClient] create", HTTP.OK, HTTP.CREATED)
+        assert_status(response, f"CategoryClient.create({name})", HTTP.OK, HTTP.CREATED)
         return CategoryDto.model_validate(response.json())
 
     @allure.step("API: Удалить категорию ID {category_id}")
     def delete(self, category_id: int) -> None:
         response = self._api.delete_category(category_id)
-        assert_status(response, f"CategoryClient] delete({category_id})", HTTP.NO_CONTENT, HTTP.OK)
+        assert_status(response, f"CategoryClient.delete({category_id})", HTTP.NO_CONTENT, HTTP.OK)
 
     @allure.step("API: Получить список всех категорий")
     def category_list(self) -> list[CategoryDto]:

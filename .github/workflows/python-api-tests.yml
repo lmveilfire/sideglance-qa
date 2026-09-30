@@ -64,7 +64,7 @@ jobs:
       - name: Wait for backend to be ready
         run: |
           for i in {1..30}; do
-            if curl -s http://localhost:8080/api/health > /dev/null; then
+            if curl -sf http://localhost:8080/api/health > /dev/null; then
               echo "Backend ready"
               BACKEND_READY=true
               break
@@ -72,9 +72,8 @@ jobs:
             echo "Waiting for backend... ($i/30)"
             sleep 3
           done
-          echo "Backend did not start in time"
 
-          if [ "$BACKEND_READY" = "false" ]; then
+          if [ "$BACKEND_READY" != "true" ]; then
             echo "Backend did not start in time"
             exit 1
           fi
@@ -82,7 +81,7 @@ jobs:
       - name: Wait for frontend to be ready
         run: |
           for i in {1..30}; do
-            if curl -s http://localhost/health > /dev/null; then
+            if curl -sf http://localhost/health > /dev/null; then
               echo "Frontend ready"
               FRONTEND_READY=true
               break
@@ -91,7 +90,7 @@ jobs:
             sleep 3
           done
 
-          if [ "$FRONTEND_READY" = "false" ]; then
+          if [ "$FRONTEND_READY" != "true" ]; then
             echo "Frontend did not start in time"
             exit 1
           fi
@@ -105,24 +104,86 @@ jobs:
           TEST_ADMIN_PASSWORD: ${{ secrets.TEST_ADMIN_PASSWORD }}
         run: pytest -m api tests/api
 
-      - name: Upload HTML report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: pytest-html-report
-          path: python/reports/
-          retention-days: 7
-
-      - name: Upload Allure results
+      - name: Upload Allure raw results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: allure-results
-          path: python/allure-results/
+          path: python/allure-results
           retention-days: 7
-          include-hidden-files: true
 
       - name: Stop services (cleanup)
         if: always()
         working-directory: ./app
         run: docker compose -f docker-compose.tests.yml down -v
+
+  publish-report:
+    name: Publish Allure report
+    needs: tests
+    if: ${{ always() && (github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch') }}
+    concurrency:
+      group: pages-deploy
+      cancel-in-progress: false
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Install Allure CLI dependencies
+        run: npm ci
+
+      - name: Download all Allure results
+        uses: actions/download-artifact@v4
+        with:
+          pattern: allure-results*
+          merge-multiple: true
+          path: allure-results
+
+      - name: Restore trend history from gh-pages
+        uses: actions/checkout@v4
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Carry over previous history
+        run: |
+          mkdir -p allure-results/history
+          if [ -d gh-pages/python-api/history ]; then
+            cp -r gh-pages/python-api/history/* allure-results/history/ || true
+          fi
+
+      - name: Write Allure executor metadata
+        run: |
+          cat > allure-results/executor.json <<EOF
+          {
+            "name": "GitHub Actions (Sideglance CI)",
+            "type": "github",
+            "reportName": "QA Automation Report",
+            "buildName": "Run #${{ github.run_number }}",
+            "buildUrl": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+            "url": "${{ github.server_url }}/${{ github.repository }}/actions"
+          }
+          EOF
+
+      - name: Generate Allure report with history
+        run: npx allure generate allure-results --clean -o allure-report
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: allure-report
+          destination_dir: python-api

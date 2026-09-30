@@ -16,7 +16,6 @@ async def test_user_gallery_search_and_clear(
     free_photo_title = "never give up"
     photo_list = create_photos_in_different_categories(category_client, photo_client, 6)
 
-
     await gallery_page.goto()
     await gallery_page.search_photo(photo_list[2][0].title)
 

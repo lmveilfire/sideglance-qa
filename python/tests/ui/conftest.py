@@ -1,9 +1,9 @@
-import asyncio
-import contextlib
 import os
+from collections.abc import AsyncGenerator
 
 import allure
 import pytest
+import pytest_asyncio
 from dotenv import load_dotenv
 from playwright.async_api import Page
 
@@ -26,6 +26,20 @@ def base_url() -> str:
 @pytest.fixture
 def browser_context_args(browser_context_args: dict) -> dict:
     return {**browser_context_args, "locale": "ru-RU", "viewport": {"width": 1440, "height": 900}}
+
+
+@pytest_asyncio.fixture(autouse=True, loop_scope="session")
+async def screenshot_on_failure(
+    page: Page, request: pytest.FixtureRequest
+) -> AsyncGenerator[None, None]:
+    yield
+    rep = getattr(request.node, "rep_call", None)
+    if rep is not None and rep.failed:
+        allure.attach(
+            await page.screenshot(),
+            name="Скриншот на момент падения",
+            attachment_type=allure.attachment_type.PNG,
+        )
 
 
 @pytest.fixture
@@ -56,27 +70,3 @@ def moderate_comments_page(page: Page) -> ModerateCommentsPage:
 @pytest.fixture
 def photo_upload_page(page: Page) -> PhotoUploadPage:
     return PhotoUploadPage(page)
-
-
-@pytest.hookimpl(tryfirst=True, hookwrapper=True)
-def pytest_runtest_makereport(item, call):
-    outcome = yield
-    report = outcome.get_result()
-
-    if report.when != "call" or not report.failed:
-        return
-    if "ui" not in item.keywords:
-        return
-
-    page = item.funcargs.get("page")
-    if page is None or allure is None:
-        return
-
-    with contextlib.suppress(Exception):
-        loop = asyncio.get_event_loop()
-        screenshot = loop.run_until_complete(page.screenshot())
-        allure.attach(
-            screenshot,
-            name="Скриншот на момент падения",
-            attachment_type=allure.attachment_type.PNG,
-        )
