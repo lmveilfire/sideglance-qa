@@ -26,6 +26,6 @@ class CategoryApi:
     ) -> requests.Response:
         return self._session.delete(
             f"{API_URL}/api/categories/{category_id}",
-            headers=headers or self._auth_headers,
+            headers=self._auth_headers if headers is None else headers,
             timeout=10,
         )

@@ -85,6 +85,10 @@ class PhotoUploadPage(BasePage):
         return self.page.get_by_test_id("success-alert")
 
     @property
+    def error_alert(self) -> Locator:
+        return self.page.get_by_test_id("error-alert")
+
+    @property
     def category_hint(self) -> Locator:
         return self.page.get_by_test_id("category-hint")
 

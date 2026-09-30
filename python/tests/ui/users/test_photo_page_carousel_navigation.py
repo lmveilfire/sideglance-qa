@@ -2,8 +2,8 @@ import allure
 import pytest
 from playwright.async_api import expect
 
-from src.utils.generators import Generate
 from src.helpers.photo_helpers import create_photo_list
+from src.utils.generators import Generate
 
 
 @pytest.mark.ui
@@ -13,7 +13,7 @@ async def test_photo_page_carousel_navigation(
     photo_client,
     photo_page,
 ) -> None:
-    
+
     category = category_client.create(Generate.category_data().name)
 
     photo_old, photo_new = create_photo_list(category.id, photo_client, 2)

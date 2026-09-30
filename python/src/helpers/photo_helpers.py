@@ -1,6 +1,6 @@
 from src.clients.category_client import CategoryClient
 from src.clients.photo_client import PhotoClient
-from src.utils.constants import DEFAULT_FILE_PATH
+from src.utils.constants import AVAILABLE_IMAGES, DEFAULT_FILE_PATH
 from src.utils.generators import Generate
 from src.utils.models import CategoryDto, PhotoDto
 
@@ -18,7 +18,7 @@ def create_photo_with_category(
 
 
 def create_photo_list(
-    category_id: int, photo_client: PhotoClient, count: int = 6
+    category_id: int, photo_client: PhotoClient, count: int = AVAILABLE_IMAGES
 ) -> list[PhotoDto]:
     file_extension = ".jpg"
     date_param = 1
@@ -26,11 +26,16 @@ def create_photo_list(
     for i in range(count):
         photo = photo_client.upload(
             Generate.fixture_path(f"{i + 1}{file_extension}"),
-            Generate.photo_data(categoryId=category_id, takenAt=Generate.iso_date_offset(i + date_param)),
+            Generate.photo_data(
+                categoryId=category_id, takenAt=Generate.iso_date_offset(i + date_param)
+            ),
         )
         photo_list.append(photo)
 
     return photo_list
 
-def create_photos_in_different_categories(category_client, photo_client, count=4):
+
+def create_photos_in_different_categories(
+    category_client: CategoryClient, photo_client: PhotoClient, count: int = 4
+) -> list[tuple[PhotoDto, CategoryDto]]:
     return [create_photo_with_category(category_client, photo_client) for _ in range(count)]

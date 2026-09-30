@@ -16,18 +16,20 @@ class SubcategoryClient:
     @allure.step("API: Создать подкатегорию '{name}' в категории ID {category_id}")
     def create(self, category_id: int, name: str) -> SubcategoryDto:
         response = self._api.create(category_id, name)
-        assert_status(response, "SubcategoryClient] create", HTTP.OK, HTTP.CREATED)
+        assert_status(
+            response, f"SubcategoryClient.create(({category_id}, {name})", HTTP.OK, HTTP.CREATED
+        )
         return SubcategoryDto.model_validate(response.json())
 
     @allure.step("API: Удалить подкатегорию ID {subcategory_id}")
     def delete(self, subcategory_id: int) -> None:
         response = self._api.delete_subcategory(subcategory_id)
         assert_status(
-            response, "SubcategoryClient] delete({subcategory_id})", HTTP.NO_CONTENT, HTTP.OK
+            response, f"SubcategoryClient.delete({subcategory_id})", HTTP.NO_CONTENT, HTTP.OK
         )
 
     @allure.step("API: Получить список подкатегорий для категории ID {category_id}")
     def list_by_category_id(self, category_id: int) -> list[SubcategoryDto]:
         response = self._api.get_by_category_id(category_id)
-        assert_status(response, "SubcategoryClient] listByCategoryId", HTTP.OK)
+        assert_status(response, f"SubcategoryClient.listByCategoryId(({category_id})", HTTP.OK)
         return TypeAdapter(list[SubcategoryDto]).validate_python(response.json())
