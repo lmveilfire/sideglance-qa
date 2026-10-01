@@ -63,7 +63,7 @@ jobs:
       - name: Wait for backend to be ready
         run: |
           for i in {1..30}; do
-            if curl -s http://localhost:8080/api/health > /dev/null; then
+            if curl -sf http://localhost:8080/api/health > /dev/null; then
               echo "Backend ready"
               BACKEND_READY=true
               break
@@ -80,7 +80,7 @@ jobs:
       - name: Wait for frontend to be ready
         run: |
           for i in {1..30}; do
-            if curl -s http://localhost/health > /dev/null; then
+            if curl -sf http://localhost/health > /dev/null; then
               echo "Frontend ready"
               FRONTEND_READY=true
               break
@@ -93,6 +93,13 @@ jobs:
             echo "Frontend did not start in time"
             exit 1
           fi
+          
+      - name: Debug frontend
+        if: always()
+        run: |
+          curl -si http://localhost/ | head -30
+          curl -si http://localhost/health | head -10
+          docker compose -f app/docker-compose.tests.yml logs --tail=50 frontend
 
       - name: Run Playwright tests
         working-directory: typescript
