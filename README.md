@@ -9,12 +9,13 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-[![CI Tests Typescript](https://github.com/lmveilfire/sideglance-qa/actions/workflows/playwright.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions/workflows/playwright.yml)
-[![CI API Tests Python ](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-ui-tests.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-ui-tests.yml)
-[![CI UI Tests Python ](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-api-tests.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-api-tests.yml)
+[![CI Tests Typescript](https://github.com/lmveilfire/sideglance-qa/actions/workflows/playwright.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions/workflows/typescript-api-ui.yml)
+[![CI API Tests Python ](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-ui-tests.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-api-tests.yml)
+[![CI UI Tests Python ](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-api-tests.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-ui-tests.yml)
 
 ### Архитектура запуска и CI/CD
 У каждого стека свой собственный workflow-файл в .github/workflows/, со своим набором инструментов сборки. Но общая канва одна и та же:
+
 1. Чекаут тестов. Пайплайн забирает кодовую базу автотестов из этого репозитория.
 2. Чекаут приватного приложения. По токену подтягивается закрытый репозиторий с исходным кодом SUT (frontend + backend). Образы собираются из исходников прямо на раннере (docker compose ... --build).
 3. Конфигурация. Динамически собирает .env файлы для тестового контура из GitHub Secrets.
@@ -22,17 +23,19 @@
 5. Оркестрация. Через Docker Compose поднимается изолированный тестовый контур: PostgreSQL + Backend + Frontend с настроенными healthcheck-ами.
 6. Верификация готовности. В цикле опрашивает сервисы через curl, пока оба не станут доступны.
 7. Прогон тестов. Запускает автотесты конкретного стека напрямую на раннере. 
-8. Артефакты. Сохраняет отчёты Allure и (там, где применимо для конкретного стека) скриншоты/видео падений.
+8. Артефакты. Сохраняет сырые результаты Allure как артефакт GitHub Actions
 9. Очистка. Полностью останавливает контейнеры и удаляет Docker Volumes.
+10. Скачивает артефакт с результатами Allure
+11. Генерация Allure-отчёт
+12. Публикация отчёт в GitHub Pages
 
 ### Структура тестовых фреймворков
 Тестирование одной и той же бизнес-логики приложения (авторизация, модерация, комментарии) реализовано независимо в изолированных папках с разным набором технических решений в каждой:
 
-*   **`/typescript-playwright`** — E2E и API-тесты на `TypeScript` + `Playwright`. Линтинг (`ESLint`), форматирование (`Prettier`), генерация данных (`@faker-js/faker`).
-*   **`/python`** — API и UI/E2E тесты на стеке `Python` + `pytest` + `Playwright`. Архитектура построена на принципах **Type-Driven Development**:
-    *   **Валидация контрактов:** На замену декларативным матчерам внедрена строгая рантайм-проверка схем через модели `Pydantic v2`.
-    *   **Раздельный статический анализ:** В `pyproject.toml` настроена строгая проверка типов через Mypy только для папки `src.*` (включен запрет на функции без аннотаций, нетипизированные вызовы, строгие дженерики и т.д.). 
-    *   **Инфраструктурная изоляция:** Реализован обход IP Rate-Limit бэкенда через динамическую подмену заголовков `X-Forwarded-For`, что гарантирует стабильность тестов в CI/CD без ложных падений. Зависимости разделены на runtime, API и UI блоки для ускорения сборок.
+*   **/typescript**
+API и UI/E2E тесты на `TypeScript` + `Playwright`. UI-тесты построены на `Page Object Model` с кастомными декораторами для `Allure`. API-слой архитектурно разделен на сырой `api` (для негативных сценариев и проверки кодов ошибок) и типизированные `clients` (с автоматической валидацией контрактов через `Zod`). Инструменты: `ESLint`, `Prettier`, `@faker-js/faker`.
+*   **/python**
+API и UI/E2E тесты на `Python` + `pytest` + `Playwright`. UI-тесты используют `Page Object Model` и кастомные хуки для прикрепления скриншотов и детальныъ HTTP-трейсов (`request`/`response`) в `Allure` только при падении теста. API-слой также разделен на `api` (сырые запросы) и `clients` (возврат строго типизированных `Pydantic` моделей). Инструменты: `Mypy`, `Ruff`.
 
 ### Безопасность
 * Все секреты хранятся в GitHub Secrets.
