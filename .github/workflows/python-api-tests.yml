@@ -134,11 +134,6 @@ jobs:
         with:
           node-version: 20
 
-      - uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '17'
-
       - name: Download all Allure results
         uses: actions/download-artifact@v4
         with:
@@ -174,7 +169,7 @@ jobs:
           EOF
 
       - name: Generate Allure report with history
-        run: npx allure generate allure-results --clean -o allure-report
+        run: npx allure generate allure-results -o allure-report
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
