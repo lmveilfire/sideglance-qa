@@ -165,6 +165,19 @@ jobs:
           subfolder: python-api
           keep_reports: 20
 
+      - name: Publish badge data
+        run: |
+          S=allure-report/summary.json
+          D=allure-history/python-api
+          TOTAL=$(jq '.stats.total // 0' "$S")
+          PASSED=$(jq '.stats.passed // 0' "$S")
+          FAILED=$(jq '(.stats.failed // 0) + (.stats.broken // 0)' "$S")
+          COLOR=$([ "$FAILED" -gt 0 ] && echo red || echo brightgreen)
+          mkdir -p "$D"
+          jq -n --arg m "$TOTAL" '{schemaVersion:1,label:"Total",message:$m,color:"blue"}' > "$D/badge-total.json"
+          jq -n --arg m "$PASSED" '{schemaVersion:1,label:"Passed",message:$m,color:"brightgreen"}' > "$D/badge-passed.json"
+          jq -n --arg m "$FAILED" --arg c "$COLOR" '{schemaVersion:1,label:"Failed",message:$m,color:$c}' > "$D/badge-failed.json"
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
