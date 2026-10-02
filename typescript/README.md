@@ -1,11 +1,19 @@
 
 Проект представляет собой комплексный, автоматизированный фреймворк для сквозного тестирования API и пользовательского интерфейса (UI/E2E) для галереи [sideglance.ru](https://sideglance.ru)
 
-[![CI Tests](https://github.com/lmveilfire/sideglance-qa/actions/workflows/playwright.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions/workflows/playwright.yml)
-[![TypeScript](https://img.shields.io/badge/TypeScript-blue)](https://www.typescriptlang.org/)
+[![CI Tests](https://github.com/lmveilfire/sideglance-qa/actions/workflows/typescript-api-ui.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions/workflows/typescript-api-ui.yml)
+[![TypeScript](https://img.shields.io/badge/TypeScript-6.0.3-blue)](https://www.typescriptlang.org/)
 [![Playwright](https://img.shields.io/badge/Playwright-green)](https://playwright.dev)
-[![Zod](https://shields.io)](https://zod.dev)
-[![ESLint](https://shields.io)](https://eslint.org)
+[![Zod](https://img.shields.io/badge/zod-4.6.5-blue)](https://zod.dev)
+[![ESLint](https://img.shields.io/badge/ESLint-9.39.4-purple)](https://eslint.org)
+
+###  Allure Reports
+
+**TypeScript API & UI Tests:**
+[![TypeScript API & UI Total](https://img.shields.io/endpoint?url=https%3A%2F%2Flmveilfire.github.io%2Fsideglance-qa%2Ftypescript%2Fbadge-total.json)](https://lmveilfire.github.io/sideglance-qa/typescript/)
+[![TypeScript API & UI Passed](https://img.shields.io/endpoint?url=https%3A%2F%2Flmveilfire.github.io%2Fsideglance-qa%2Ftypescript%2Fbadge-passed.json)](https://lmveilfire.github.io/sideglance-qa/typescript/)
+[![TypeScript API & UI Failed](https://img.shields.io/endpoint?url=https%3A%2F%2Flmveilfire.github.io%2Fsideglance-qa%2Ftypescript%2Fbadge-failed.json)](https://lmveilfire.github.io/sideglance-qa/typescript/)
+
 
 ### Стек технологий: 
 
