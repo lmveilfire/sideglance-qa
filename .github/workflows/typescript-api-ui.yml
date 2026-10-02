@@ -1,6 +1,9 @@
-name: CI Tests Typescript Playwright
+name: CI Tests Typescript
 
 on:
+  push:
+    branches:
+      - feature/complete-playwright-framework
   workflow_dispatch:
 
 jobs:
