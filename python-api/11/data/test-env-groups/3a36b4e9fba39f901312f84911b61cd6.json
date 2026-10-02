@@ -1,0 +1,1 @@
+{"id":"3a36b4e9fba39f901312f84911b61cd6","fullName":"tests.api.photos.test_api_upload_photo_without_token#test_api_upload_photo_without_token","name":"Фотографии: запрет загрузки новой фотографии на сервер без авторизационного токена","status":"passed","testResultsByEnv":{"default":"db6312e23735afc863cf91315c7c0707"}}

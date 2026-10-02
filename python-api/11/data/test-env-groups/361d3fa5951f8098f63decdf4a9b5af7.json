@@ -1,0 +1,1 @@
+{"id":"361d3fa5951f8098f63decdf4a9b5af7","fullName":"tests.api.comments.test_api_get_captcha#test_api_get_captcha","name":"Комментарии: успешная генерация капчи и проверка структуры ответа по контракту","status":"passed","testResultsByEnv":{"default":"ae483648e548560a48bb68a614371687"}}

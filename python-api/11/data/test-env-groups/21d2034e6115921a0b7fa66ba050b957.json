@@ -1,0 +1,1 @@
+{"id":"21d2034e6115921a0b7fa66ba050b957","fullName":"tests.api.comments.test_api_delete_comment#test_api_delete_approved_comment","name":"Комментарии: успешное удаление одобренного комментария через панель администратора","status":"passed","testResultsByEnv":{"default":"72661822680c22fdd3af26e06fb3c755"}}

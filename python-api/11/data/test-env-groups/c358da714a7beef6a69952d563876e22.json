@@ -1,0 +1,1 @@
+{"id":"c358da714a7beef6a69952d563876e22","fullName":"tests.api.comments.test_api_create_comment_duplicate_session#test_api_create_comment_duplicate_session","name":"Комментарии: отклонение повторного запроса с использованным идентификатором сессии капчи","status":"passed","testResultsByEnv":{"default":"132ce5b6fa0c98e91ac35d79b76c6d0c"}}

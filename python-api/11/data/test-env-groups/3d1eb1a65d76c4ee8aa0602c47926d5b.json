@@ -1,0 +1,1 @@
+{"id":"3d1eb1a65d76c4ee8aa0602c47926d5b","fullName":"tests.api.comments.test_api_comment_lifecycle_approved#test_api_comment_lifecycle_approved","name":"Комментарии: одобрение комментария делает его видимым публично","status":"passed","testResultsByEnv":{"default":"99cbfdcb9fe78d4ee13c61f344bf181c"}}

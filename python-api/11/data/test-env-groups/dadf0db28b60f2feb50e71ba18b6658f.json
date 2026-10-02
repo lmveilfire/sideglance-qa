@@ -1,0 +1,1 @@
+{"id":"dadf0db28b60f2feb50e71ba18b6658f","fullName":"tests.api.photos.test_api_get_photo_by_id_success#test_api_get_photo_by_id_success","name":"Фотографии: успешное получение данных фотографии по ее существующему идентификатору","status":"passed","testResultsByEnv":{"default":"aaaeecb64b1c84a359f7a4fec8590c8a"}}
