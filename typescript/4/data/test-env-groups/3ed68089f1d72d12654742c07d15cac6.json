@@ -1,0 +1,1 @@
+{"id":"3ed68089f1d72d12654742c07d15cac6","fullName":"api/auth/refresh-token-invalid.spec.ts#авторизация: Отклонение сессии при невалидном токене обновления","name":"авторизация: Отклонение сессии при невалидном токене обновления","status":"passed","testResultsByEnv":{"default":"356860a159060906f9085d3ae0c9753b"}}

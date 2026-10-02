@@ -1,0 +1,1 @@
+{"id":"fe19d15d12115f76e3deb7082127079b","fullName":"api/categories/delete-nonexistent-category.spec.ts#категории: удаление при запросе с несуществующим идентификатором","name":"категории: удаление при запросе с несуществующим идентификатором","status":"passed","testResultsByEnv":{"default":"9c7221d55368e5fb90a16a1824d3c0f5"}}

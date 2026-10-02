@@ -1,0 +1,1 @@
+{"id":"ea1a9bc698307d1a0ed69cd94a208088","fullName":"api/comments/get-admin-comments-without-token.spec.ts#комментарии: запрет получения списка комментариев админки без авторизации","name":"комментарии: запрет получения списка комментариев админки без авторизации","status":"passed","testResultsByEnv":{"default":"be4c9ff767ebe6df43bfabd8995113b1"}}

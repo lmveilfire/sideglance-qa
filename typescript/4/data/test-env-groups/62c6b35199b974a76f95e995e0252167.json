@@ -1,0 +1,1 @@
+{"id":"62c6b35199b974a76f95e995e0252167","fullName":"api/categories/delete-category-without-token.spec.ts#категории: Запрет удаления категории без авторизационного токена","name":"категории: Запрет удаления категории без авторизационного токена","status":"passed","testResultsByEnv":{"default":"0930d58238460ef597f35f5873465ae1"}}
