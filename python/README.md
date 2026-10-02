@@ -1,4 +1,4 @@
-Проект представляет собой комплексный, автоматизированный фреймворк для сквозного тестирования API и пользовательского интерфейса (UI/E2E) для галереи [sideglance.ru](https://sideglance.ru)
+**Проект представляет собой комплексный, автоматизированный фреймворк для сквозного тестирования API и пользовательского интерфейса (UI/E2E) для галереи [sideglance.ru](https://sideglance.ru)**
 
 [![API Tests](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-api-tests.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-api-tests.yml)
 [![UI Tests](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-ui-tests.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-ui-tests.yml)
@@ -6,7 +6,7 @@
 [![Pytest](https://img.shields.io/badge/Pytest-9.1.1-blue)](https://docs.pytest.org/)
 [![Playwright](https://img.shields.io/badge/playwright-green)](https://playwright.dev)
 [![Pydantic v2](https://img.shields.io/badge/pydantic-V2-purple)](https://pydantic.dev)
-[![mypy](https://img.shields.io/badge/mypy-2.3.0-green-strict-brightgreen)](https://mypy-lang.org)
+[![mypy](https://img.shields.io/badge/mypy-strict-brightgreen)](https://mypy-lang.org)
 
 **Python API Tests:**
 [![Python API Total](https://img.shields.io/endpoint?url=https%3A%2F%2Flmveilfire.github.io%2Fsideglance-qa%2Fpython-api%2Fbadge-total.json)](https://lmveilfire.github.io/sideglance-qa/python-api/)
@@ -20,7 +20,7 @@
 
 ### Стек технологий:
 
-*   **Язык:**: Python 3.10
+*   **Язык:** Python 3.10
 *   **Тестовый движок:** pytest 9.1+
 *   **Валидация и DTO:** Pydantic v2 (строгий рантайм-контроль контрактов API)
 *   **Статический анализ:** mypy 2.3+ (в режиме `--strict` для слоя `src/`)

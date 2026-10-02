@@ -1,5 +1,5 @@
 
-Проект представляет собой комплексный, автоматизированный фреймворк для сквозного тестирования API и пользовательского интерфейса (UI/E2E) для галереи [sideglance.ru](https://sideglance.ru)
+**Проект представляет собой комплексный, автоматизированный фреймворк для сквозного тестирования API и пользовательского интерфейса (UI/E2E) для галереи [sideglance.ru](https://sideglance.ru)**
 
 [![CI Tests](https://github.com/lmveilfire/sideglance-qa/actions/workflows/typescript-api-ui.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions/workflows/typescript-api-ui.yml)
 [![TypeScript](https://img.shields.io/badge/TypeScript-6.0.3-blue)](https://www.typescriptlang.org/)
@@ -17,13 +17,13 @@
 
 ### Стек технологий: 
 
-**Язык**: TypeScript 6.0.3 / Node.js v20.20.2
-**Тестовый движок**: Playwright Test
-**Валидация и DTO**: Zod (строгий runtime-контроль схем данных)
-**Качество кода**: ESLint 9.39.4 + Prettier 3.8.4
-**Тестовые данные**: @faker-js/faker
-**Управление окружением**: dotenv (конфигурация через `.env` файлы)
-**Отчетность**: Allure Report (`allure-pytest`, публикуется в CI)
+* **Язык**: TypeScript 6.0.3 / Node.js v20.20.2
+* **Тестовый движок**: Playwright Test
+* **Валидация и DTO**: Zod (строгий runtime-контроль схем данных)
+* **Качество кода**: ESLint 9.39.4 + Prettier 3.8.4
+* **Тестовые данные**: @faker-js/faker
+* **Управление окружением**: dotenv (конфигурация через `.env` файлы)
+* **Отчетность**: Allure Report (`allure-pytest`, публикуется в CI)
 
 ### Архитектура
 ```
