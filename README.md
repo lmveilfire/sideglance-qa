@@ -13,9 +13,9 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-[![CI Tests Typescript](https://github.com/lmveilfire/sideglance-qa/actions/workflows/typescript-api-ui/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions/workflows/typescript-api-ui.yml)
-[![CI API Tests Python ](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-ui-tests.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-api-tests.yml)
-[![CI UI Tests Python ](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-api-tests.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-ui-tests.yml)
+[![CI Tests Typescript](https://github.com/lmveilfire/sideglance-qa/actions/workflows/typescript-api-ui.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions/workflows/typescript-api-ui.yml)
+[![CI API Tests Python ](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-api-tests.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-api-tests.yml)
+[![CI UI Tests Python ](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-ui-tests.yml/badge.svg)](https://github.com/lmveilfire/sideglance-qa/actions/workflows/python-ui-tests.yml)
 
 ###  Allure Reports
 
