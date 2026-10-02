@@ -1,0 +1,1 @@
+{"id":"6d8cd2e383c1300078fec8214510b1c4","fullName":"tests.api.comments.test_api_create_comment_too_fast#test_api_create_comment_too_fast","name":"Комментарии: отклонение запроса при слишком быстром разгадывании капчи","status":"passed","testResultsByEnv":{"default":"42272f35dbe182d78e9828a480324db1"}}

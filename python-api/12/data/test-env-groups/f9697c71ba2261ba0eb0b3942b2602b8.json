@@ -1,0 +1,1 @@
+{"id":"f9697c71ba2261ba0eb0b3942b2602b8","fullName":"tests.api.comments.test_api_comment_lifecycle_pending#test_api_comment_pending_isolation","name":"Комментарии: новый комментарий создается в статусе ожидания и скрыт публично","status":"passed","testResultsByEnv":{"default":"88b04018aef3acb263ca4285e36d58cf"}}

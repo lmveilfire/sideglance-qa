@@ -1,0 +1,1 @@
+{"id":"f80f92ebbc2b3f9393c400e7e66169c2","fullName":"tests.api.comments.test_api_create_comment_wrong_captcha#test_api_create_comment_wrong_captcha","name":"Комментарии: отклонение запроса при отправке неверного математического ответа капчи","status":"passed","testResultsByEnv":{"default":"e2a03787dcdaf0a061de47babc468c02"}}

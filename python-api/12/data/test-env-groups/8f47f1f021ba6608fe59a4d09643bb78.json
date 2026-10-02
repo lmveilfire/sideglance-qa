@@ -1,0 +1,1 @@
+{"id":"8f47f1f021ba6608fe59a4d09643bb78","fullName":"tests.api.comments.test_api_get_comments_empty_page#test_api_get_comments_empty_page","name":"Комментарии: возвращение пустой страницы пагинации для фотографии без комментариев","status":"passed","testResultsByEnv":{"default":"b7d0a6e487424fa21ad95b32637871bd"}}

@@ -1,0 +1,1 @@
+{"id":"7cfb96855beb7efb020c5cedb41935bc","fullName":"tests.api.auth.test_api_refresh_token_success#test_api_refresh_token_success","name":"Авторизация: Успешное обновление пары JWT-токенов","status":"passed","testResultsByEnv":{"default":"2b6eb5c8ec90062593bc55ac28646e32"}}

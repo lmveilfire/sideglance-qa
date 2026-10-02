@@ -1,0 +1,1 @@
+{"id":"d1acc1b1e73ce5b59cc7096405407900","fullName":"tests.api.subcategories.test_api_subcategory_list_contains_all_created#test_api_subcategory_list_contains_all_created","name":"Подкатегории: получение списка всех массово созданных подкатегорий внутри одной категории","status":"passed","testResultsByEnv":{"default":"72006f8fd00c43a678824da42f321087"}}

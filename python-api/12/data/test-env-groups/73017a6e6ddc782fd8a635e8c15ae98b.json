@@ -1,0 +1,1 @@
+{"id":"73017a6e6ddc782fd8a635e8c15ae98b","fullName":"tests.api.photos.test_api_get_photo_by_id_nonexistent#test_api_get_photo_by_id_nonexistent","name":"Фотографии: отклонение запроса с кодом 404 при поиске несуществующего идентификатора","status":"passed","testResultsByEnv":{"default":"58849a3e008575666acdd76b0a35a71d"}}
