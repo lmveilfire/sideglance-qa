@@ -123,16 +123,10 @@ jobs:
     concurrency:
       group: pages-deploy
       cancel-in-progress: false
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-
       - name: Download all Allure results
         uses: actions/download-artifact@v4
         with:
@@ -140,40 +134,59 @@ jobs:
           merge-multiple: true
           path: allure-results
 
-      - name: Restore trend history from gh-pages
-        uses: actions/checkout@v4
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages
-
-      - name: Carry over previous history
-        run: |
-          mkdir -p allure-results/history
-          if [ -d gh-pages/typescript/history ]; then
-            cp -r gh-pages/typescript/history/* allure-results/history/ || true
-          fi
-
       - name: Write Allure executor metadata
         run: |
           cat > allure-results/executor.json <<EOF
           {
-            "name": "GitHub Actions (Sideglance CI)",
+            "name": "GitHub Actions (Sideglance-qa CI)",
             "type": "github",
-            "reportName": "QA Automation Report",
             "buildName": "Run #${{ github.run_number }}",
             "buildUrl": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
             "url": "${{ github.server_url }}/${{ github.repository }}/actions"
           }
           EOF
 
-      - name: Generate Allure report with history
-        run: npx allure generate allure-results -o allure-report
+      - name: Get Allure history
+        uses: actions/checkout@v4
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+          persist-credentials: false
+
+      - name: Generate Allure report
+        uses: GuitaristForEver/allure-v3-report-action@v1.1.0
+        with:
+          allure_results: allure-results
+          allure_report: allure-report
+          allure_history: allure-history
+          gh_pages: gh-pages
+          report_name: TypeScript API & UI Tests
+          subfolder: typescript
+          keep_reports: 20
+
+      - name: Fix permissions on report folder
+        run: sudo chown -R "$(id -u):$(id -g)" allure-history   
+
+      - name: Publish badge data
+        run: |
+          TOTAL=$(jq '.stats.total // 0' allure-report/summary.json)
+          PASSED=$(jq '.stats.passed // 0' allure-report/summary.json)
+          FAILED=$(jq '.stats.failed // 0' allure-report/summary.json)
+          BROKEN=$(jq '.stats.broken // 0' allure-report/summary.json)
+          FAILED=$((FAILED + BROKEN))
+
+          COLOR=brightgreen
+          if [ "$FAILED" -gt 0 ]; then COLOR=red; fi
+
+          echo '{"schemaVersion":1,"label":"Total","message":"'$TOTAL'","color":"blue"}' > allure-history/typescript/badge-total.json
+          echo '{"schemaVersion":1,"label":"Passed","message":"'$PASSED'","color":"brightgreen"}' > allure-history/typescript/badge-passed.json
+          echo '{"schemaVersion":1,"label":"Failed","message":"'$FAILED'","color":"'$COLOR'"}' > allure-history/typescript/badge-failed.json
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: allure-report
-          destination_dir: typescript
+          publish_dir: allure-history
+          keep_files: true

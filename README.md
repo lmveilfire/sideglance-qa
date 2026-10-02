@@ -20,19 +20,20 @@
 ###  Allure Reports
 
 **Python API Tests:**
-[![Python API Total](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Flmveilfire.github.io%2Fsideglance-qa%2Fpython-api%2Fwidgets%2Fsummary.json&label=Total&query=%24.statistic.total&color=blue&logo=allure)](https://lmveilfire.github.io/sideglance-qa/python-api/)
-[![Python API Passed](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Flmveilfire.github.io%2Fsideglance-qa%2Fpython-api%2Fwidgets%2Fsummary.json&label=Passed&query=%24.statistic.passed&color=brightgreen)](https://lmveilfire.github.io/sideglance-qa/python-api/)
-[![Python API Failed](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Flmveilfire.github.io%2Fsideglance-qa%2Fpython-api%2Fwidgets%2Fsummary.json&label=Failed&query=%24.statistic.failed&color=red)](https://lmveilfire.github.io/sideglance-qa/python-api/)
+[![Python API Total](https://img.shields.io/endpoint?url=https%3A%2F%2Flmveilfire.github.io%2Fsideglance-qa%2Fpython-api%2Fbadge-total.json)](https://lmveilfire.github.io/sideglance-qa/python-api/)
+[![Python API Passed](https://img.shields.io/endpoint?url=https%3A%2F%2Flmveilfire.github.io%2Fsideglance-qa%2Fpython-api%2Fbadge-passed.json)](https://lmveilfire.github.io/sideglance-qa/python-api/)
+[![Python API Failed](https://img.shields.io/endpoint?url=https%3A%2F%2Flmveilfire.github.io%2Fsideglance-qa%2Fpython-api%2Fbadge-failed.json)](https://lmveilfire.github.io/sideglance-qa/python-api/)
 
 **Python UI Tests:**
-[![Python UI Total](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Flmveilfire.github.io%2Fsideglance-qa%2Fpython-ui%2Fwidgets%2Fsummary.json&label=Total&query=%24.statistic.total&color=blue&logo=allure)](https://lmveilfire.github.io/sideglance-qa/python-ui/)
-[![Python UI Passed](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Flmveilfire.github.io%2Fsideglance-qa%2Fpython-ui%2Fwidgets%2Fsummary.json&label=Passed&query=%24.statistic.passed&color=brightgreen)](https://lmveilfire.github.io/sideglance-qa/python-ui/)
-[![Python UI Failed](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Flmveilfire.github.io%2Fsideglance-qa%2Fpython-ui%2Fwidgets%2Fsummary.json&label=Failed&query=%24.statistic.failed&color=red)](https://lmveilfire.github.io/sideglance-qa/python-ui/)
+[![Python UI Total](https://img.shields.io/endpoint?url=https%3A%2F%2Flmveilfire.github.io%2Fsideglance-qa%2Fpython-ui%2Fbadge-total.json)](https://lmveilfire.github.io/sideglance-qa/python-ui/)
+[![Python UI Passed](https://img.shields.io/endpoint?url=https%3A%2F%2Flmveilfire.github.io%2Fsideglance-qa%2Fpython-ui%2Fbadge-passed.json)](https://lmveilfire.github.io/sideglance-qa/python-ui/)
+[![Python UI Failed](https://img.shields.io/endpoint?url=https%3A%2F%2Flmveilfire.github.io%2Fsideglance-qa%2Fpython-ui%2Fbadge-failed.json)](https://lmveilfire.github.io/sideglance-qa/python-ui/)
 
 **TypeScript API & UI Tests:**
-[![TypeScript Total](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Flmveilfire.github.io%2Fsideglance-qa%2Ftypescript%2Fwidgets%2Fsummary.json&label=Total&query=%24.statistic.total&color=blue&logo=allure)](https://lmveilfire.github.io/sideglance-qa/typescript/)
-[![TypeScript Passed](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Flmveilfire.github.io%2Fsideglance-qa%2Ftypescript%2Fwidgets%2Fsummary.json&label=Passed&query=%24.statistic.passed&color=brightgreen)](https://lmveilfire.github.io/sideglance-qa/typescript/)
-[![TypeScript Failed](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Flmveilfire.github.io%2Fsideglance-qa%2Ftypescript%2Fwidgets%2Fsummary.json&label=Failed&query=%24.statistic.failed&color=red)](https://lmveilfire.github.io/sideglance-qa/typescript/)
+[![TypeScript API & UI Total](https://img.shields.io/endpoint?url=https%3A%2F%2Flmveilfire.github.io%2Fsideglance-qa%2Ftypescript%2Fbadge-total.json)](https://lmveilfire.github.io/sideglance-qa/typescript/)
+[![TypeScript API & UI Passed](https://img.shields.io/endpoint?url=https%3A%2F%2Flmveilfire.github.io%2Fsideglance-qa%2Ftypescript%2Fbadge-passed.json)](https://lmveilfire.github.io/sideglance-qa/typescript/)
+[![TypeScript API & UI Failed](https://img.shields.io/endpoint?url=https%3A%2F%2Flmveilfire.github.io%2Fsideglance-qa%2Ftypescript%2Fbadge-failed.json)](https://lmveilfire.github.io/sideglance-qa/typescript/)
+
 
 ### Архитектура запуска и CI/CD
 У каждого стека свой собственный workflow-файл в .github/workflows/, со своим набором инструментов сборки. Однако все пайплайны построены по единой архитектурной схеме, разделенной на два этапа::
