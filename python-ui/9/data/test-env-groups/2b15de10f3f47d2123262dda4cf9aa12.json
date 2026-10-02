@@ -1,0 +1,1 @@
+{"id":"2b15de10f3f47d2123262dda4cf9aa12","fullName":"tests.ui.admin.upload.test_admin_cannot_delete_category_with_photos#test_admin_cannot_delete_category_with_photos","name":"Защита данных: невозможность удаления категории, содержащей фотографии","status":"passed","testResultsByEnv":{"default":"c65d1eaf9a6f89aa30cd184aab301a4c"}}

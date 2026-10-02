@@ -1,0 +1,1 @@
+{"id":"f35bb074fc9b5703e6b721b5ce55e3dc","fullName":"tests.ui.admin.auth.test_login_success_redirects_to_admin_panel#test_login_success_redirects_to_admin_panel","name":"Успешная авторизация администратора с последующим редиректом в панель управления","status":"passed","testResultsByEnv":{"default":"7526b35dea698c0b64942145bc584aa6"}}

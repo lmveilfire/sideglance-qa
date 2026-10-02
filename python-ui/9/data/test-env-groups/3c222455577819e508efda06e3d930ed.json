@@ -1,0 +1,1 @@
+{"id":"3c222455577819e508efda06e3d930ed","fullName":"tests.ui.admin.upload.test_admin_upload_requires_title#test_admin_upload_requires_title","name":"Загрузка фото: отправка формы без заголовка блокируется валидацией","status":"passed","testResultsByEnv":{"default":"3226080d91d4b556c006e2df833a08e6"}}

@@ -1,0 +1,1 @@
+{"id":"003edcaf2973844d680931ae02b72472","fullName":"tests.ui.admin.moderate.test_admin_filters_rejected_comments#test_admin_filters_rejected_comments","name":"Фильтр 'Отклонённые' отображает только отклонённые комментарии","status":"passed","testResultsByEnv":{"default":"ffe383772b77cb8062e56065b5239f5b"}}

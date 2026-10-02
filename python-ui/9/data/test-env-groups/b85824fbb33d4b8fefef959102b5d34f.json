@@ -1,0 +1,1 @@
+{"id":"b85824fbb33d4b8fefef959102b5d34f","fullName":"tests.ui.admin.auth.test_login_fails_with_invalid_password#test_login_fails_with_invalid_password","name":"Администратор не может войти с неверным паролем и остается на странице авторизации","status":"passed","testResultsByEnv":{"default":"0fd05344f26d49bd92fd2f2504b88e87"}}

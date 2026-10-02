@@ -1,0 +1,1 @@
+{"id":"3c7356351ce4ec0d3239ff8e00361800","fullName":"tests.ui.admin.auth.test_login_submit_disabled_with_empty_fields#test_login_submit_disabled_with_empty_fields","name":"Форма входа: отправка формы невозможна при пустых полях логина и пароля","status":"passed","testResultsByEnv":{"default":"c8a3e2389980a201c37afe583542a665"}}

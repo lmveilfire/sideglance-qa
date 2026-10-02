@@ -1,0 +1,1 @@
+{"id":"0527d497bf50cfcdda1f160db5caff73","fullName":"tests.ui.admin.moderate.test_admin_filters_approved_comments#test_admin_filters_approved_comments","name":"Фильтр 'Одобренные' отображает только одобренные комментарии, которые затем видны в галерее","status":"passed","testResultsByEnv":{"default":"1debc0f68a2cc1c17a247f53659ca67e"}}
