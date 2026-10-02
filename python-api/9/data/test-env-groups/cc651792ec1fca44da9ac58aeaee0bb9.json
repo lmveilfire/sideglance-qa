@@ -1,0 +1,1 @@
+{"id":"cc651792ec1fca44da9ac58aeaee0bb9","fullName":"tests.api.auth.test_login_wrong_password#test_login_wrong_password","name":"Ошибка API-авторизации при вводе неверного пароля","status":"passed","testResultsByEnv":{"default":"32c1f474ce343599da347c8100a89f97"}}

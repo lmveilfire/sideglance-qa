@@ -1,0 +1,1 @@
+{"id":"cb12abcc5fc7758916287bdd7321e148","fullName":"tests.api.photos.test_api_like_photo_counters#test_api_like_photo_counters","name":"Фотографии: успешное увеличение счетчика лайков при оценке фотографии пользователем","status":"passed","testResultsByEnv":{"default":"8222bb3094c3d9ae8aceac5702ca7e9d"}}

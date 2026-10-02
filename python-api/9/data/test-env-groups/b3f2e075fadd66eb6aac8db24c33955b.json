@@ -1,0 +1,1 @@
+{"id":"b3f2e075fadd66eb6aac8db24c33955b","fullName":"tests.api.comments.test_api_comment_lifecycle_rejected#test_api_comment_lifecycle_rejected","name":"Комментарии: отклонение комментария модератором скрывает его из публичного доступа","status":"passed","testResultsByEnv":{"default":"691efe11e070589a0ddeb3d8874b6c53"}}

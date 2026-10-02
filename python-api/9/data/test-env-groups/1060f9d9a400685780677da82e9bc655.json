@@ -1,0 +1,1 @@
+{"id":"1060f9d9a400685780677da82e9bc655","fullName":"tests.api.auth.test_api_refresh_token_invalid#test_api_refresh_token_invalid","name":"Авторизация: Отклонение сессии при невалидном токене обновления","status":"passed","testResultsByEnv":{"default":"e0d0997121c3e7412b5d5e83ac32972f"}}

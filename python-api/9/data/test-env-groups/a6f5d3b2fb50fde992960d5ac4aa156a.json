@@ -1,0 +1,1 @@
+{"id":"a6f5d3b2fb50fde992960d5ac4aa156a","fullName":"tests.api.comments.test_api_create_comment_honeypot_trap#test_api_create_comment_honeypot_trap","name":"комментарии: скрытое игнорирование создания комментария при заполнении скрытого поля спам-бота","status":"passed","testResultsByEnv":{"default":"73139738e468f1cc2b19ca8acb0cbacd"}}
