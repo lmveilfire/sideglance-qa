@@ -1,9 +1,6 @@
 name: CI Tests Typescript
 
 on:
-  push:
-    branches:
-      - feature/complete-playwright-framework
   workflow_dispatch:
 
 jobs:
@@ -96,13 +93,6 @@ jobs:
             echo "Frontend did not start in time"
             exit 1
           fi
-          
-      - name: Debug frontend
-        if: always()
-        run: |
-          curl -si http://localhost/ | head -30
-          curl -si http://localhost/health | head -10
-          docker compose -f app/docker-compose.tests.yml logs --tail=50 frontend
 
       - name: Run Playwright tests
         working-directory: typescript
