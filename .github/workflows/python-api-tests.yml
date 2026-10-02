@@ -124,16 +124,10 @@ jobs:
     concurrency:
       group: pages-deploy
       cancel-in-progress: false
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-
       - name: Download all Allure results
         uses: actions/download-artifact@v4
         with:
@@ -141,40 +135,40 @@ jobs:
           merge-multiple: true
           path: allure-results
 
-      - name: Restore trend history from gh-pages
-        uses: actions/checkout@v4
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages
-
-      - name: Carry over previous history
-        run: |
-          mkdir -p allure-results/history
-          if [ -d gh-pages/python-api/history ]; then
-            cp -r gh-pages/python-api/history/* allure-results/history/ || true
-          fi
-
       - name: Write Allure executor metadata
         run: |
           cat > allure-results/executor.json <<EOF
           {
-            "name": "GitHub Actions (Sideglance CI)",
+            "name": "GitHub Actions (Sideglance-qa CI)",
             "type": "github",
-            "reportName": "QA Automation Report",
             "buildName": "Run #${{ github.run_number }}",
             "buildUrl": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
             "url": "${{ github.server_url }}/${{ github.repository }}/actions"
           }
           EOF
 
-      - name: Generate Allure report with history
-        run: npx allure generate allure-results -o allure-report
+      - name: Get Allure history
+        uses: actions/checkout@v4
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Generate Allure report
+        uses: GuitaristForEver/allure-v3-report-action@v1.1.0
+        with:
+          allure_results: allure-results
+          allure_report: allure-report
+          allure_history: allure-history
+          gh_pages: gh-pages
+          report_name: Python API Tests
+          subfolder: python-api
+          keep_reports: 20
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: allure-report
-          destination_dir: python-api
+          publish_dir: allure-history
+          keep_files: true

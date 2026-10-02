@@ -8,6 +8,10 @@
 [![Pydantic v2](https://img.shields.io/badge/pydantic-purple)](https://pydantic.dev)
 [![mypy](https://img.shields.io/badge/mypy-strict-brightgreen)](https://mypy-lang.org)
 
+[![Python API Total](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Flmveilfire.github.io%2Fsideglance-qa%2Fpython-api%2Fsummary.json&label=Total&query=%24.stats.total&color=blue&logo=allure)](https://lmveilfire.github.io/sideglance-qa/python-api/)
+[![Python API Passed](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Flmveilfire.github.io%2Fsideglance-qa%2Fpython-api%2Fsummary.json&label=Passed&query=%24.stats.passed&color=brightgreen)](https://lmveilfire.github.io/sideglance-qa/python-api/)
+[![Python API Failed](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Flmveilfire.github.io%2Fsideglance-qa%2Fpython-api%2Fsummary.json&label=Failed&query=%24.stats.failed&color=red)](https://lmveilfire.github.io/sideglance-qa/python-api/)
+
 ### Стек технологий:
 
 *   **Язык:**: Python 3.10
