@@ -200,9 +200,6 @@ jobs:
           echo '{"schemaVersion":1,"label":"Passed","message":"'$PASSED'","color":"brightgreen"}' > allure-history/python-ui/badge-passed.json
           echo '{"schemaVersion":1,"label":"Failed","message":"'$FAILED'","color":"'$COLOR'"}' > allure-history/python-ui/badge-failed.json
 
-      - name: Generate Allure report with history
-        run: npx allure generate allure-results -o allure-report
-
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
