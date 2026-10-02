@@ -1,0 +1,1 @@
+{"id":"3d79dbef53d11a1988e1652fd45657af","fullName":"tests.api.comments.test_api_get_comments_pagination#test_api_get_comments_pagination","name":"Комментарии: пагинация корректно разбивает список комментариев на страницы","status":"passed","testResultsByEnv":{"default":"6d946865c59326e01cc0cdcaf3a09acd"}}

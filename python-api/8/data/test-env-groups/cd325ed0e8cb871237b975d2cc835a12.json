@@ -1,0 +1,1 @@
+{"id":"cd325ed0e8cb871237b975d2cc835a12","fullName":"tests.api.subcategories.test_api_list_empty_category#test_api_empty_category","name":"Подкатегории: возвращение пустого списка при запросе для категории без подкатегорий","status":"passed","testResultsByEnv":{"default":"d9ebbceda3694276f1977fc384268ae5"}}

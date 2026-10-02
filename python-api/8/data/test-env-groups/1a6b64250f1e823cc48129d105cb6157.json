@@ -1,0 +1,1 @@
+{"id":"1a6b64250f1e823cc48129d105cb6157","fullName":"tests.api.categories.test_api_delete_nonexistent_category#test_api_delete_nonexistent_category","name":"Категории: удаление при запросе с несуществующим идентификатором","status":"passed","testResultsByEnv":{"default":"21ff2fab1151887da76450af03b1a3e7"}}
